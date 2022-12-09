@@ -1,1 +1,1 @@
-rootProject.name = "jwt"
+rootProject.name = "spring-boot-kotlin-example"
