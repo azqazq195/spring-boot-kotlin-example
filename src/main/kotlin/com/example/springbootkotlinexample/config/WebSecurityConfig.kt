@@ -1,6 +1,5 @@
 package com.example.springbootkotlinexample.config
 
-import com.example.springbootkotlinexample.common.interceptor.LoggingInterceptor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -15,19 +14,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 @EnableWebSecurity
-class WebSecurityConfig(
-    private val loggingInterceptor: LoggingInterceptor
-) : WebMvcConfigurer {
+class WebSecurityConfig : WebMvcConfigurer {
     @Bean
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
-    }
-
-    override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(loggingInterceptor)
-            .addPathPatterns("/**")
-            .excludePathPatterns("/auth/sign-in")
-        super.addInterceptors(registry)
     }
 
     @Bean
