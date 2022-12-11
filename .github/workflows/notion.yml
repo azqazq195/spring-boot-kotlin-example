@@ -9,7 +9,7 @@ jobs:
       - name: Notion Card Creator
         uses: dodo4114/issue-to-notion@v1.1.1
         env:
-          NOTION_TOKEN: ${{ secrets.NOTION_API_KEY }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           DATABASE_URL: https://www.notion.so/moseoh/a09dbcd98ed54c7cb1dd28ee67adba39?v=0fbf91d95dce44f69289a1de6bf05bab
           PROPERTY_NAME: 프로퍼티
           STATE_OPEN: 열림
