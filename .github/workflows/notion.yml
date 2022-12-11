@@ -1,16 +1,29 @@
-name: issue_to_notion
+name: Notion Sync
+
 on:
+  workflow_dispatch:
   issues:
+    types:
+      [
+        opened,
+        edited,
+        labeled,
+        unlabeled,
+        assigned,
+        unassigned,
+        milestoned,
+        demilestoned,
+        reopened,
+        closed,
+      ]
+
 jobs:
-  build:
+  notion_job:
     runs-on: ubuntu-latest
+    name: Add GitHub Issues to Notion
     steps:
-      - uses: actions/checkout@v2
-      - name: Notion Card Creator
-        uses: dodo4114/issue-to-notion@v1.1.1
-        env:
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          DATABASE_URL: https://www.notion.so/moseoh/a09dbcd98ed54c7cb1dd28ee67adba39?v=0fbf91d95dce44f69289a1de6bf05bab
-          PROPERTY_NAME: 프로퍼티
-          STATE_OPEN: 열림
-          STATE_CLOSED: 닫힘
+      - name: Add GitHub Issues to Notion
+        uses: tryfabric/notion-github-action@v1
+        with:
+          notion-token: ${{ secrets.NOTION_TOKEN }}
+          notion-db: ${{ secrets.NOTION_DATABASE }}
