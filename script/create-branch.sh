@@ -3,8 +3,6 @@
 RED="\033[1;31""m"
 GREEN="\033[1;32""m"
 YELLOW="\033[1;33""m"
-#BLUE="\033[1;34""m"
-PINK="\033[1;35""m"
 NC="\033[0m"
 
 CHECK_BRANCH="development"
@@ -18,8 +16,9 @@ if [ "$CURRENT_BRANCH" = "$CHECK_BRANCH" ]
 then
     echo "${GREEN} > current branch is '$CHECK_BRANCH'${NC}"
 else
-    echo "${RED} > current branch is not '$CHECK_BRANCH'. try again after checkout to '$CHECK_BRANCH' branch${NC}"
-    exit
+    echo "${RED} > current branch is not '$CHECK_BRANCH'.${NC}"
+    echo "${RED} > checkout branch to '$CHECK_BRANCH'.${NC}"
+    git checkout $CHECK_BRANCH
 fi
 
 echo "${GREEN} > git pull...${NC}"
@@ -27,31 +26,19 @@ git pull
 
 # branch 이름 입력
 DONE=0
-while [ $DONE != 1 ]
+while [ $DONE != "" ]
 do
-    echo "${GREEN} > input jira issue key${NC}"
-    echo "   ex)"
-    echo "      CT2-1085"
-    read -r  ISSUE_KEY
-
     echo ""
-    echo "${GREEN} > input branch name${NC}"
+    echo "${YELLOW} > input branch name${NC}"
     echo "   ex)"
     echo "      feat-product"
     echo "      refactor-product"
     echo "      fix-product"
     read -r SUBJECT
 
-    if [ "$ISSUE_KEY" = "" ]
-    then
-        BRANCH_NAME="${SUBJECT}"
-    else
-        BRANCH_NAME="${ISSUE_KEY}@${SUBJECT}"
-    fi
-    echo ""
-    echo "${PINK} > your branch name is '${BRANCH_NAME}'${NC}"
-    echo ""
-    echo "${YELLOW} > is it your branch? press '1' if you not press 'any key'"
+    BRANCH_NAME="${SUBJECT}"
+    echo "${GREEN} > your branch name is '${BRANCH_NAME}'${NC}"
+    echo "${YELLOW} > is it your branch? press 'enter''"
     read -r  DONE
 done
 
