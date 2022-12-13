@@ -5,6 +5,7 @@ import com.example.springbootkotlinexample.domain.test.controller.dto.CreateTest
 import com.example.springbootkotlinexample.domain.test.controller.dto.UpdateTestDto
 import com.example.springbootkotlinexample.domain.test.entity.Test
 import com.example.springbootkotlinexample.domain.test.service.TestService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -26,13 +27,13 @@ class TestController(
     }
 
     @PostMapping()
-    fun create(@RequestBody createTestDto: CreateTestDto): ResponseDto<Test> {
+    fun create(@RequestBody @Valid createTestDto: CreateTestDto): ResponseDto<Test> {
         val test = testService.create(createTestDto)
         return ResponseDto(HttpStatus.CREATED, test)
     }
 
     @PatchMapping("/{id}")
-    fun patch(@PathVariable id: Long, @RequestBody updateTestDto: UpdateTestDto): ResponseDto<Test> {
+    fun patch(@PathVariable id: Long, @Valid @RequestBody updateTestDto: UpdateTestDto): ResponseDto<Test> {
         testService.update(id, updateTestDto)
         return ResponseDto(HttpStatus.NO_CONTENT)
     }

@@ -1,10 +1,10 @@
-package com.example.springbootkotlinexample.domain.user.service
+package com.example.springbootkotlinexample.domain.user.user.service
 
-import com.example.springbootkotlinexample.domain.user.controller.dto.CreateUserDto
-import com.example.springbootkotlinexample.domain.user.controller.dto.UpdateUserDto
-import com.example.springbootkotlinexample.domain.user.entity.User
-import com.example.springbootkotlinexample.domain.user.repository.UserRepository
-import com.example.springbootkotlinexample.domain.user.exception.NotFoundUserException
+import com.example.springbootkotlinexample.domain.user.user.controller.dto.CreateUserDto
+import com.example.springbootkotlinexample.domain.user.user.controller.dto.UpdateUserDto
+import com.example.springbootkotlinexample.domain.user.user.entity.User
+import com.example.springbootkotlinexample.domain.user.user.entity.repository.UserRepository
+import com.example.springbootkotlinexample.domain.user.user.service.exception.NotFoundUserException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service

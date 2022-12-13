@@ -1,10 +1,10 @@
-package com.example.springbootkotlinexample.domain.user.controller
+package com.example.springbootkotlinexample.domain.user.user.controller
 
 import com.example.springbootkotlinexample.common.dto.ResponseDto
-import com.example.springbootkotlinexample.domain.user.controller.dto.CreateUserDto
-import com.example.springbootkotlinexample.domain.user.controller.dto.UpdateUserDto
-import com.example.springbootkotlinexample.domain.user.entity.User
-import com.example.springbootkotlinexample.domain.user.service.UserService
+import com.example.springbootkotlinexample.domain.user.user.controller.dto.CreateUserDto
+import com.example.springbootkotlinexample.domain.user.user.controller.dto.UpdateUserDto
+import com.example.springbootkotlinexample.domain.user.user.entity.User
+import com.example.springbootkotlinexample.domain.user.user.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping

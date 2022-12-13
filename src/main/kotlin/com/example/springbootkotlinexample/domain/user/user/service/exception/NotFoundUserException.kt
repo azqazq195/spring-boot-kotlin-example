@@ -1,4 +1,4 @@
-package com.example.springbootkotlinexample.domain.user.exception
+package com.example.springbootkotlinexample.domain.user.user.service.exception
 
 import com.example.springbootkotlinexample.common.exception.NotFoundException
 
