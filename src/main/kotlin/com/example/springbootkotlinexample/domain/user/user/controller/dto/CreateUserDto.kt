@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.user.user.controller.dto
 
-import com.example.springbootkotlinexample.common.dto.CreateDto
+import com.example.springbootkotlinexample.common.generic.controller.dto.BaseCreateDto
 import com.example.springbootkotlinexample.domain.user.user.entity.User
 import jakarta.validation.constraints.NotBlank
 
@@ -15,7 +15,7 @@ data class CreateUserDto(
     val isCheckedEmail: Boolean,
     val isReceivedPhone: Boolean,
     val isReceivedEmail: Boolean,
-) : CreateDto<User>() {
+) : BaseCreateDto<User>() {
     override fun toEntity(): User {
         return User(
             username = username,

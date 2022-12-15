@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.user.user.entity
 
-import com.example.springbootkotlinexample.common.entity.BaseTimeEntity
+import com.example.springbootkotlinexample.common.generic.entity.BaseTimeEntity
 import com.example.springbootkotlinexample.domain.user.user.entity.constants.GenderEnum
 import jakarta.persistence.*
 import org.hibernate.annotations.Comment

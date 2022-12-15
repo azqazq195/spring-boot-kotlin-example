@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.user.user.controller
 
-import com.example.springbootkotlinexample.common.dto.ResponseDto
+import com.example.springbootkotlinexample.common.generic.response.ResponseDto
 import com.example.springbootkotlinexample.domain.user.user.controller.dto.CreateUserDto
 import com.example.springbootkotlinexample.domain.user.user.controller.dto.UpdateUserDto
 import com.example.springbootkotlinexample.domain.user.user.entity.User

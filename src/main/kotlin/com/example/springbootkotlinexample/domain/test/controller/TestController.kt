@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.test.controller
 
-import com.example.springbootkotlinexample.common.dto.ResponseDto
+import com.example.springbootkotlinexample.common.generic.response.ResponseDto
 import com.example.springbootkotlinexample.domain.test.controller.dto.CreateTestDto
 import com.example.springbootkotlinexample.domain.test.controller.dto.UpdateTestDto
 import com.example.springbootkotlinexample.domain.test.entity.Test

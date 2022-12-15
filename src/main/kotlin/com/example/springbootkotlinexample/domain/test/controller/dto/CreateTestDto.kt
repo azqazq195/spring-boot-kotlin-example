@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.test.controller.dto
 
-import com.example.springbootkotlinexample.common.dto.CreateDto
+import com.example.springbootkotlinexample.common.generic.controller.dto.BaseCreateDto
 import com.example.springbootkotlinexample.domain.test.entity.Test
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
@@ -13,7 +13,7 @@ data class CreateTestDto(
     val comment: String,
     @field:Min(value = 1, message = "1 이상.")
     val count: Int
-) : CreateDto<Test>() {
+) : BaseCreateDto<Test>() {
     override fun toEntity(): Test {
         return Test(
             name = name,

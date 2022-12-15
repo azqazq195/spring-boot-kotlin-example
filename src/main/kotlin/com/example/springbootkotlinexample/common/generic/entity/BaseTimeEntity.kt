@@ -1,4 +1,4 @@
-package com.example.springbootkotlinexample.common.entity
+package com.example.springbootkotlinexample.common.generic.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners

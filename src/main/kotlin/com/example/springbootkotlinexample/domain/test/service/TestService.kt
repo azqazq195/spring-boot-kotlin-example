@@ -25,7 +25,7 @@ class TestService(
 
     fun update(targetId: Long, updateTestDto: UpdateTestDto): Test {
         val target = findById(targetId);
-        val test = updateTestDto.toUpdatedEntity(target)
+        val test = updateTestDto.toEntity(target)
         return testRepository.save(test);
     }
 }

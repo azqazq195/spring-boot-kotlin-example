@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.common.advice
 
-import com.example.springbootkotlinexample.common.dto.ResponseDto
+import com.example.springbootkotlinexample.common.generic.response.ResponseDto
 import com.example.springbootkotlinexample.common.exception.NotFoundException
 import com.example.springbootkotlinexample.config.logger
 import org.springframework.http.HttpStatus

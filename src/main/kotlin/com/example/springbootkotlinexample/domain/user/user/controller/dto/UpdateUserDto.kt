@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.user.user.controller.dto
 
-import com.example.springbootkotlinexample.common.dto.UpdateDto
+import com.example.springbootkotlinexample.common.generic.controller.dto.BaseUpdateDto
 import com.example.springbootkotlinexample.domain.user.user.entity.constants.GenderEnum
 import com.example.springbootkotlinexample.domain.user.user.entity.User
 import java.util.Date
@@ -23,7 +23,7 @@ data class UpdateUserDto(
     val withdrawReason: String?,
     val isBlocked: Boolean?,
     val adminRemark: String?,
-) : UpdateDto<User>() {
+) : BaseUpdateDto<User>() {
     override fun toEntity(entity: User): User = entity.copy(
         username = username ?: entity.username,
         password = password ?: entity.password,
