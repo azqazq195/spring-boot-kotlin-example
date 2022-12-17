@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.user.user.entity
 
-import com.example.springbootkotlinexample.common.generic.entity.BaseTimeEntity
+import com.example.springbootkotlinexample.common.base.entity.AbstractAuditingEntity
 import com.example.springbootkotlinexample.domain.user.user.entity.constants.GenderEnum
 import jakarta.persistence.*
 import org.hibernate.annotations.Comment
@@ -10,9 +10,6 @@ import java.util.Date
 
 @Entity(name = "tb_user")
 data class User(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
-
     @Column(
         length = 255,
         nullable = false,
@@ -115,7 +112,7 @@ data class User(
     )
     @Comment("관리용 회원 비고 정보")
     val adminRemark: String? = null,
-) : UserDetails, BaseTimeEntity() {
+) : UserDetails, AbstractAuditingEntity() {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = ArrayList()
     override fun getUsername(): String = username
     override fun getPassword(): String = password

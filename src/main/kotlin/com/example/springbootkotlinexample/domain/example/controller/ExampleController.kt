@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.example.controller
 
-import com.example.springbootkotlinexample.common.generic.controller.BaseCRUDController
+import com.example.springbootkotlinexample.common.base.controller.AbstractCRUDController
 import com.example.springbootkotlinexample.domain.example.controller.dto.CreateExampleDto
 import com.example.springbootkotlinexample.domain.example.controller.dto.UpdateExampleDto
 import com.example.springbootkotlinexample.domain.example.entity.Example
@@ -12,5 +12,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/example")
 class ExampleController(
     exampleService: ExampleService
-): BaseCRUDController<Example, CreateExampleDto, UpdateExampleDto>(exampleService) {
-}
+) : AbstractCRUDController<Example, CreateExampleDto, UpdateExampleDto>(
+    exampleService
+)

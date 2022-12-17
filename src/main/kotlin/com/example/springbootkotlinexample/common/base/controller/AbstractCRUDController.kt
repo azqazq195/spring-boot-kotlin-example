@@ -1,19 +1,14 @@
 package com.example.springbootkotlinexample.common.base.controller
 
-import com.example.springbootkotlinexample.common.base.controller.dto.ICreateDto
-import com.example.springbootkotlinexample.common.base.controller.dto.IUpdateDto
+import com.example.springbootkotlinexample.common.base.controller.dto.*
 import com.example.springbootkotlinexample.common.base.entity.IEntity
 import com.example.springbootkotlinexample.common.base.entity.PrimaryKeyEntity
+import com.example.springbootkotlinexample.common.base.response.ResponseDto
 import com.example.springbootkotlinexample.common.base.service.ICRUDService
-import com.example.springbootkotlinexample.common.generic.controller.dto.BaseCreateDto
-import com.example.springbootkotlinexample.common.generic.controller.dto.BaseUpdateDto
-import com.example.springbootkotlinexample.common.generic.response.ResponseDto
-import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.responses.ApiResponse
-import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+
 
 abstract class AbstractCRUDController<E, CD, UD>(
     private val service: ICRUDService<E>
@@ -34,6 +29,17 @@ abstract class AbstractCRUDController<E, CD, UD>(
         return ResponseDto(HttpStatus.OK)
     }
 
+    @PostMapping()
+    override fun create(@RequestBody @Valid createDto: CD): ResponseDto<Any> {
+        return ResponseDto(HttpStatus.CREATED, service.create(createDto))
+    }
+
+    @PostMapping("/bulk")
+    override fun createAll(@RequestBody @Valid createDtoList: ValidDtoList<CD>): ResponseDto<Any> {
+        service.createAll(createDtoList)
+        return ResponseDto(HttpStatus.CREATED)
+    }
+
     @PatchMapping("/{id}")
     override fun update(
         @PathVariable id: Long,
@@ -44,19 +50,8 @@ abstract class AbstractCRUDController<E, CD, UD>(
     }
 
     @PatchMapping("/bulk")
-    override fun updateAll(@RequestBody @Valid updateDtoList: List<UD>): ResponseDto<Any> {
+    override fun updateAll(@RequestBody @Valid updateDtoList: ValidDtoList<UD>): ResponseDto<Any> {
         service.updateAll(updateDtoList)
         return ResponseDto(HttpStatus.NO_CONTENT)
-    }
-
-    @PostMapping()
-    override fun create(@RequestBody @Valid createDto: CD): ResponseDto<Any> {
-        return ResponseDto(HttpStatus.CREATED, service.create(createDto))
-    }
-
-    @PostMapping("/bulk")
-    override fun createAll(@RequestBody @Valid createDtoList: List<CD>): ResponseDto<Any> {
-        service.createAll(createDtoList)
-        return ResponseDto(HttpStatus.CREATED)
     }
 }

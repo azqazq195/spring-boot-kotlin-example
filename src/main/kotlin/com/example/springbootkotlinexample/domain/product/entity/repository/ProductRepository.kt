@@ -5,5 +5,4 @@ import com.example.springbootkotlinexample.domain.product.entity.Product
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ProductRepository : IRepository<Product> {
-}
+interface ProductRepository : IRepository<Product>

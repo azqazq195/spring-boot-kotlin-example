@@ -7,6 +7,7 @@ import com.example.springbootkotlinexample.common.base.entity.PrimaryKeyEntity
 import com.example.springbootkotlinexample.common.base.entity.repository.IRepository
 import com.example.springbootkotlinexample.common.advice.exception.InvalidException
 import com.example.springbootkotlinexample.common.advice.exception.NotFoundException
+import com.example.springbootkotlinexample.common.base.controller.dto.ValidDtoList
 import jakarta.transaction.Transactional
 import java.lang.reflect.ParameterizedType
 
@@ -26,34 +27,33 @@ abstract class AbstractCRUDService<E>(
         repository.findAll()
 
     @Transactional
-    override fun delete(id: Long) {
-        // TODO soft-delete 구현
-        repository.delete(find(id))
+    override fun create(createDto: ICreateDto<E>): E =
+        repository.save(createDto.toEntity())
+
+    @Transactional
+    override fun <CD : ICreateDto<E>> createAll(createListDto: ValidDtoList<CD>) {
+        createListDto.list!!.forEach { create(it) }
     }
 
     @Transactional
-    override fun <D : IUpdateDto<E>> update(id: Long, updateDto: D) {
+    override fun update(id: Long, updateDto: IUpdateDto<E>) {
         val entity = find(id)
         entity.update(updateDto)
         repository.save(entity)
     }
 
     @Transactional
-    override fun <D : IUpdateDto<E>> updateAll(updateDtoList: List<D>) {
-        updateDtoList.map {
+    override fun <UD : IUpdateDto<E>> updateAll(updateListDto: ValidDtoList<UD>) {
+        updateListDto.list!!.forEach {
             it.id ?: throw InvalidException("id")
-            val entity = find(it.id!!)
-            entity.update(it)
-            repository.save(entity)
+            update(it.id!!, it)
         }
     }
 
     @Transactional
-    override fun <D : ICreateDto<E>> create(createDto: D): E =
-        repository.save(createDto.toEntity())
-
-    @Transactional
-    override fun <D : ICreateDto<E>> createAll(createDtoList: List<D>) {
-        repository.saveAll(createDtoList.map { it.toEntity() })
+    override fun delete(id: Long) {
+        // TODO soft-delete 구현
+        repository.delete(find(id))
     }
+
 }

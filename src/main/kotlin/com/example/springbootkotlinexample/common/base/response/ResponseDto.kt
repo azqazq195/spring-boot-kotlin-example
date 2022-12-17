@@ -1,4 +1,4 @@
-package com.example.springbootkotlinexample.common.generic.response
+package com.example.springbootkotlinexample.common.base.response
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

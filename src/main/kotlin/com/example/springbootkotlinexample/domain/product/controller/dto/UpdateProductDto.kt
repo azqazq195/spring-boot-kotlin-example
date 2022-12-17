@@ -12,9 +12,11 @@ import jakarta.validation.constraints.Size
  */
 data class UpdateProductDto(
     override val id: Long?,
+
     @field:NotEmpty
     @field:Size(min = 2, max = 5)
     val name: String?,
+
     @field:NotEmpty
     @field:Size(min = 2, max = 100)
     val description: String?,

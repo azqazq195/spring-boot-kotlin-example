@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.common.advice
 
-import com.example.springbootkotlinexample.common.generic.response.ResponseDto
+import com.example.springbootkotlinexample.common.base.response.ResponseDto
 import com.example.springbootkotlinexample.common.advice.exception.BadRequestException
 import com.example.springbootkotlinexample.common.advice.exception.InvalidException
 import com.example.springbootkotlinexample.common.advice.exception.NotFoundException
