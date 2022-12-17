@@ -27,9 +27,9 @@ class WebSecurityConfig : WebMvcConfigurer {
             .rememberMe().disable()
             .logout().disable()
             .headers().disable()
-            // rest api 만을 고려하여 기본 설정은 해제하겠습니다.
+            // rest api 만을 고려하여 기본 설정은 해제.
             .httpBasic().disable()
-            // csrf 보안 토큰 disable 처리.
+            // csrf 보안 토큰 해제.
             .csrf().disable()
             // 토큰 기반 인증이므로 세션 역시 사용하지 않습니다.
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

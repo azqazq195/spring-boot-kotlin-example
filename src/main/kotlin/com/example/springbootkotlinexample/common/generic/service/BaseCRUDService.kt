@@ -1,9 +1,9 @@
 package com.example.springbootkotlinexample.common.generic.service
 
-import com.example.springbootkotlinexample.common.exception.InvalidException
+import com.example.springbootkotlinexample.common.advice.exception.InvalidException
 import com.example.springbootkotlinexample.common.generic.controller.dto.BaseCreateDto
 import com.example.springbootkotlinexample.common.generic.controller.dto.BaseUpdateDto
-import com.example.springbootkotlinexample.common.exception.NotFoundException
+import com.example.springbootkotlinexample.common.advice.exception.NotFoundException
 import com.example.springbootkotlinexample.common.generic.entity.BaseEntity
 import com.example.springbootkotlinexample.common.generic.entity.repository.BaseRepository
 import com.example.springbootkotlinexample.domain.brand.entity.Brand
