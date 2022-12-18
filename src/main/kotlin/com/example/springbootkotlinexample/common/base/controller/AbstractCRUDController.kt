@@ -1,7 +1,6 @@
 package com.example.springbootkotlinexample.common.base.controller
 
 import com.example.springbootkotlinexample.common.base.controller.dto.*
-import com.example.springbootkotlinexample.common.base.entity.IEntity
 import com.example.springbootkotlinexample.common.base.entity.PrimaryKeyEntity
 import com.example.springbootkotlinexample.common.base.response.ResponseDto
 import com.example.springbootkotlinexample.common.base.service.ICRUDService
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 abstract class AbstractCRUDController<E, CD, UD>(
     private val service: ICRUDService<E>
-) : ICRUDController<E, CD, UD> where E : PrimaryKeyEntity, E : IEntity, CD : ICreateDto<E>, UD : IUpdateDto<E> {
+) : ICRUDController<E, CD, UD> where E : PrimaryKeyEntity, CD : AbstractCreateDto<E>, UD : AbstractUpdateDto<E> {
     @GetMapping("/{id}")
     override fun find(@PathVariable id: Long): ResponseDto<Any> {
         return ResponseDto(HttpStatus.OK, service.find(id))

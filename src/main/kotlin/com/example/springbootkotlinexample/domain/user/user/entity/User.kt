@@ -1,5 +1,6 @@
 package com.example.springbootkotlinexample.domain.user.user.entity
 
+import com.example.springbootkotlinexample.common.base.controller.dto.AbstractUpdateDto
 import com.example.springbootkotlinexample.common.base.entity.AbstractAuditingEntity
 import com.example.springbootkotlinexample.domain.user.user.entity.constants.GenderEnum
 import jakarta.persistence.*
@@ -9,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.util.Date
 
 @Entity(name = "tb_user")
-data class User(
+class User(
     @Column(
         length = 255,
         nullable = false,
@@ -121,12 +122,7 @@ data class User(
     override fun isCredentialsNonExpired(): Boolean = true
     override fun isEnabled(): Boolean = true
 
-    fun addLoginFailCount() = copy(loginFailCount = loginFailCount + 1)
-    fun resetLoginFailCount() = copy(loginFailCount = 0)
-    fun block() = copy(isBlocked = true)
-    fun unblock() = copy(isBlocked = false)
-    fun verifyEmail() = copy(isCheckedEmail = true)
-    fun verifyPhone() = copy(isCheckedPhone = true)
-    fun updatePassword(password: String, salt: String) = copy(password = password, salt = salt)
-    fun updateLastLoginAt() = copy(lastLoginAt = Date())
+    override fun <UD : AbstractUpdateDto<E>, E> update(dto: UD) {
+        TODO("Not yet implemented")
+    }
 }

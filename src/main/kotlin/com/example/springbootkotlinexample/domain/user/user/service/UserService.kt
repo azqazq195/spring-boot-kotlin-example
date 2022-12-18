@@ -31,8 +31,8 @@ class UserService(
 
     fun update(targetId: Long, updateUserDto: UpdateUserDto): User {
         val target = findById(targetId)
-        val user = updateUserDto.toEntity(target)
-        return userRepository.save(user);
+//        val user = updateUserDto.toEntity(target)
+        return userRepository.save(target);
     }
 }
 

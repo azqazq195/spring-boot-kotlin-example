@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.example.controller.dto
 
-import com.example.springbootkotlinexample.common.base.controller.dto.ICreateDto
+import com.example.springbootkotlinexample.common.base.controller.dto.AbstractCreateDto
 import com.example.springbootkotlinexample.domain.example.entity.Example
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.NotNull
@@ -18,7 +18,7 @@ class CreateExampleDto(
     @field:NotNull
     @field:Max(100)
     val count: Int?,
-) : ICreateDto<Example> {
+) : AbstractCreateDto<Example>() {
     override fun toEntity(): Example {
         return Example(
             name = name!!,

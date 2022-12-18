@@ -1,17 +1,15 @@
 package com.example.springbootkotlinexample.common.base.entity
 
-import com.example.springbootkotlinexample.common.base.controller.dto.IUpdateDto
-import com.github.f4b6a3.ulid.UlidCreator
+import com.example.springbootkotlinexample.common.base.controller.dto.AbstractUpdateDto
 import jakarta.persistence.*
-import org.hibernate.proxy.HibernateProxy
-import org.springframework.data.domain.Persistable
-import java.util.*
 
 @MappedSuperclass
 abstract class PrimaryKeyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
+
+    abstract fun <UD : AbstractUpdateDto<E>, E> update(dto: UD)
 }
 
 //@MappedSuperclass
