@@ -5,9 +5,9 @@ import com.example.springbootkotlinexample.common.base.controller.dto.IUpdateDto
 import com.example.springbootkotlinexample.common.base.entity.IEntity
 import com.example.springbootkotlinexample.common.base.entity.PrimaryKeyEntity
 import com.example.springbootkotlinexample.common.base.entity.repository.IRepository
-import com.example.springbootkotlinexample.common.advice.exception.InvalidException
-import com.example.springbootkotlinexample.common.advice.exception.NotFoundException
 import com.example.springbootkotlinexample.common.base.controller.dto.ValidDtoList
+import com.example.springbootkotlinexample.common.base.service.exception.NotFoundEntityException
+import com.example.springbootkotlinexample.common.base.service.exception.RequiredArgumentException
 import jakarta.transaction.Transactional
 import java.lang.reflect.ParameterizedType
 
@@ -20,7 +20,7 @@ abstract class AbstractCRUDService<E>(
     }
 
     override fun find(id: Long): E {
-        return repository.findById(id).orElseThrow { NotFoundException(entityName()) }
+        return repository.findById(id).orElseThrow { NotFoundEntityException(entityName()) }
     }
 
     override fun findAll(): List<E> =
@@ -45,7 +45,7 @@ abstract class AbstractCRUDService<E>(
     @Transactional
     override fun <UD : IUpdateDto<E>> updateAll(updateListDto: ValidDtoList<UD>) {
         updateListDto.list!!.forEach {
-            it.id ?: throw InvalidException("id")
+            it.id ?: throw RequiredArgumentException("id")
             update(it.id!!, it)
         }
     }

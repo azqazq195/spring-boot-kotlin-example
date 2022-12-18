@@ -41,10 +41,7 @@ abstract class AbstractCRUDController<E, CD, UD>(
     }
 
     @PatchMapping("/{id}")
-    override fun update(
-        @PathVariable id: Long,
-        @RequestBody @Valid updateDto: UD
-    ): ResponseDto<Any> {
+    override fun update(@PathVariable id: Long, @RequestBody @Valid updateDto: UD): ResponseDto<Any> {
         service.update(id, updateDto)
         return ResponseDto(HttpStatus.NO_CONTENT)
     }
