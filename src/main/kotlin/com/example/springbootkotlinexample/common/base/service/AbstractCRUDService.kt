@@ -43,7 +43,7 @@ abstract class AbstractCRUDService<E>(
     override fun <UD : AbstractUpdateDto<E>> updateAll(updateListDto: ValidDtoList<UD>) {
         updateListDto.list!!.forEach {
             it.id ?: throw RequiredArgumentException("id")
-            update(it.id!!, it)
+            update(it.id, it)
         }
     }
 

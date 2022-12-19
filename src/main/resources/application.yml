@@ -2,7 +2,9 @@ spring:
   # DB 연결
   datasource:
     # 설치된 H2 DB와 연결 URL
-    url: jdbc:h2:~/test
+    # 빌드 종료시 in-memory database는 이미 종료되는데 종료를 시도하여 에러가 발생한다. 아래 옵션을 붙여준다.
+    # ;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:~/test;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
     # 접속을 위한 드라이버
     driver-class-name: org.h2.Driver
     # springboot 2.4 부터는 username 이 꼭 있어야합니다. 없으면 에러가 발생합니다.
@@ -26,7 +28,7 @@ spring:
 # 파라미터 확인을 위한 trace
 logging:
   level:
-    org.hibernate.type: trace
+    org.hibernate.type: debug
 
 springdoc:
   swagger-ui:

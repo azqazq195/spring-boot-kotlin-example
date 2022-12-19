@@ -7,6 +7,7 @@ import jakarta.persistence.*
 abstract class PrimaryKeyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, updatable = false)
     val id: Long? = null
 
     abstract fun <UD : AbstractUpdateDto<E>, E> update(dto: UD)

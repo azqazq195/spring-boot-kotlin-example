@@ -8,4 +8,6 @@ import org.springframework.stereotype.Service
 @Service
 class ExampleService(
     exampleRepository: ExampleRepository
-): AbstractCRUDService<Example>(exampleRepository)
+): AbstractCRUDService<Example>(exampleRepository) {
+
+}
