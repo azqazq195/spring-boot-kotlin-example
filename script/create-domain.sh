@@ -77,16 +77,16 @@ import jakarta.persistence.Entity
 
 @Entity(name = \"tb_${DOMAIN_NAME}\")
 class ${FILE_NAME}(
-  name: String,
+    name: String,
 ) : AbstractAuditingEntity() {
-  @Column(nullable = false)
-  var name: String = name
-    private set
+    @Column(nullable = false)
+    var name: String = name
+        private set
 
-  override fun <UD : AbstractUpdateDto<E>, E> update(dto: UD) {
-    val update${FILE_NAME}Dto = dto as Update${FILE_NAME}Dto
-    this.name = update${FILE_NAME}Dto.name ?: this.name
-  }
+    override fun <UD : AbstractUpdateDto<E>, E> update(dto: UD) {
+        val update${FILE_NAME}Dto = dto as Update${FILE_NAME}Dto
+        this.name = update${FILE_NAME}Dto.name ?: this.name
+    }
 }" > "entity/${FILE_NAME}.kt"
 echo "package com.example.springbootkotlinexample.domain.${DOMAIN_NAME}.entity.repository
 
@@ -109,7 +109,7 @@ import org.springframework.stereotype.Service
 @Service
 class ${FILE_NAME}Service(
     ${DOMAIN_NAME}Repository: ${FILE_NAME}Repository
-): AbstractCRUDService<${FILE_NAME}>(${DOMAIN_NAME}Repository)" > "service/${FILE_NAME}Service.kt"
+) : AbstractCRUDService<${FILE_NAME}>(${DOMAIN_NAME}Repository)" > "service/${FILE_NAME}Service.kt"
 echo "${GREEN} > created service ${NC}"
 
 echo "${GREEN} > done ${NC}"
