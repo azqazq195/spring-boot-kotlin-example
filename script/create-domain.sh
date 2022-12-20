@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(\"/api/v1/${DOMAIN_NAME}\")
 class ${FILE_NAME}Controller(
-    ${DOMAIN_NAME}Service: ${FILE_NAME}Service
+    val ${DOMAIN_NAME}Service: ${FILE_NAME}Service
 ) : AbstractCRUDController<${FILE_NAME}, Create${FILE_NAME}Dto, Update${FILE_NAME}Dto>(
     ${DOMAIN_NAME}Service
 )" > "controller/${FILE_NAME}Controller.kt"
@@ -108,7 +108,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class ${FILE_NAME}Service(
-    ${DOMAIN_NAME}Repository: ${FILE_NAME}Repository
+    val ${DOMAIN_NAME}Repository: ${FILE_NAME}Repository
 ) : AbstractCRUDService<${FILE_NAME}>(${DOMAIN_NAME}Repository)" > "service/${FILE_NAME}Service.kt"
 echo "${GREEN} > created service ${NC}"
 
