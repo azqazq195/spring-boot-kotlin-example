@@ -35,15 +35,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.github.f4b6a3:ulid-creator:5.1.0")
+    implementation("com.h2database:h2")
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
-    runtimeOnly("com.h2database:h2")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
