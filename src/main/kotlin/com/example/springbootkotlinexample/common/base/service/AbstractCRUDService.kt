@@ -16,7 +16,7 @@ abstract class AbstractCRUDService<E>(
         return (type.actualTypeArguments[0] as Class<*>).simpleName
     }
 
-    override fun find(id: Long): E {
+    override fun findById(id: Long): E {
         return repository.findById(id).orElseThrow { NotFoundEntityException(entityName()) }
     }
 
@@ -34,7 +34,7 @@ abstract class AbstractCRUDService<E>(
 
     @Transactional
     override fun update(id: Long, updateDto: AbstractUpdateDto<E>) {
-        val entity = find(id)
+        val entity = findById(id)
         entity.update(updateDto)
         repository.save(entity)
     }
@@ -50,7 +50,7 @@ abstract class AbstractCRUDService<E>(
     @Transactional
     override fun delete(id: Long) {
         // TODO soft-delete 구현
-        repository.delete(find(id))
+        repository.delete(findById(id))
     }
 
 }
