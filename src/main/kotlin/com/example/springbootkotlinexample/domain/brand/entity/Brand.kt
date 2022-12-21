@@ -29,11 +29,6 @@ class Brand(
 //        product.setBrand(this)
     }
 
-    override fun <UD : AbstractUpdateDto<E>, E> update(dto: UD) {
-        val updateBrandDto = dto as UpdateBrandDto
-        this.name = updateBrandDto.name ?: this.name
-    }
-
     override fun <RD: AbstractReadDto<E>, E> toReadDto(): RD {
         return ReadBrandDto(
             id = this.id,
