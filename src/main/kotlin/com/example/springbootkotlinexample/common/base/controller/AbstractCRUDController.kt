@@ -4,22 +4,30 @@ import com.example.springbootkotlinexample.common.base.controller.dto.*
 import com.example.springbootkotlinexample.common.base.entity.PrimaryKeyEntity
 import com.example.springbootkotlinexample.common.base.response.ResponseDto
 import com.example.springbootkotlinexample.common.base.service.ICRUDService
+import com.example.springbootkotlinexample.common.base.service.exception.RequiredArgumentException
+import com.example.springbootkotlinexample.config.logger
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import java.lang.reflect.ParameterizedType
 
 
-abstract class AbstractCRUDController<E, CD, UD>(
+abstract class AbstractCRUDController<E, CD, UD, RD>(
     private val service: ICRUDService<E>
-) : ICRUDController<E, CD, UD> where E : PrimaryKeyEntity, CD : AbstractCreateDto<E>, UD : AbstractUpdateDto<E> {
+) : ICRUDController<E, CD, UD, RD> where E : PrimaryKeyEntity, CD : AbstractCreateDto<E>, UD : AbstractUpdateDto<E>, RD : AbstractReadDto<E> {
+
+    private fun readDto(entity: E): RD {
+        return entity.toReadDto()
+    }
+
     @GetMapping("/{id}")
     override fun findById(@PathVariable id: Long): ResponseDto<Any> {
-        return ResponseDto(HttpStatus.OK, service.findById(id))
+        return ResponseDto(HttpStatus.OK, readDto(service.findById(id)))
     }
 
     @GetMapping()
     override fun findAll(): ResponseDto<Any> {
-        return ResponseDto(HttpStatus.OK, service.findAll())
+        return ResponseDto(HttpStatus.OK, service.findAll().map { readDto(it) })
     }
 
     @DeleteMapping("/{id}")
@@ -30,7 +38,7 @@ abstract class AbstractCRUDController<E, CD, UD>(
 
     @PostMapping()
     override fun create(@RequestBody @Valid createDto: CD): ResponseDto<Any> {
-        return ResponseDto(HttpStatus.CREATED, service.create(createDto))
+        return ResponseDto(HttpStatus.CREATED, readDto(service.create(createDto)))
     }
 
     @PostMapping("/bulk")

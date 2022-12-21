@@ -5,6 +5,7 @@ import com.example.springbootkotlinexample.common.base.entity.PrimaryKeyEntity
 import com.example.springbootkotlinexample.common.base.entity.repository.IRepository
 import com.example.springbootkotlinexample.common.base.service.exception.NotFoundEntityException
 import com.example.springbootkotlinexample.common.base.service.exception.RequiredArgumentException
+import com.example.springbootkotlinexample.config.logger
 import jakarta.transaction.Transactional
 import java.lang.reflect.ParameterizedType
 

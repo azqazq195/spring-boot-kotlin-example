@@ -30,7 +30,7 @@ class ExampleServiceTest(
             }
             Then("조회 확인") {
                 val foundExample = withContext(Dispatchers.IO) {
-                    exampleService.find(example.id!!)
+                    exampleService.findById(example.id!!)
                 }
                 foundExample.id shouldBe example.id
                 foundExample.name shouldBe example.name

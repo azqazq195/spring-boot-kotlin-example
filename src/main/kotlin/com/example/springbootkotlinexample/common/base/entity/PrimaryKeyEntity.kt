@@ -1,5 +1,6 @@
 package com.example.springbootkotlinexample.common.base.entity
 
+import com.example.springbootkotlinexample.common.base.controller.dto.AbstractReadDto
 import com.example.springbootkotlinexample.common.base.controller.dto.AbstractUpdateDto
 import jakarta.persistence.*
 
@@ -11,6 +12,7 @@ abstract class PrimaryKeyEntity {
     val id: Long? = null
 
     abstract fun <UD : AbstractUpdateDto<E>, E> update(dto: UD)
+    abstract fun <RD : AbstractReadDto<E>, E> toReadDto(): RD
 }
 
 //@MappedSuperclass
