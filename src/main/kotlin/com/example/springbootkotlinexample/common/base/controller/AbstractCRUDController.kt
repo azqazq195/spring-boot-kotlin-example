@@ -13,8 +13,8 @@ abstract class AbstractCRUDController<E, CD, UD>(
     private val service: ICRUDService<E>
 ) : ICRUDController<E, CD, UD> where E : PrimaryKeyEntity, CD : AbstractCreateDto<E>, UD : AbstractUpdateDto<E> {
     @GetMapping("/{id}")
-    override fun find(@PathVariable id: Long): ResponseDto<Any> {
-        return ResponseDto(HttpStatus.OK, service.find(id))
+    override fun findById(@PathVariable id: Long): ResponseDto<Any> {
+        return ResponseDto(HttpStatus.OK, service.findById(id))
     }
 
     @GetMapping()

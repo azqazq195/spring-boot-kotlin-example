@@ -5,7 +5,7 @@ import com.example.springbootkotlinexample.common.base.entity.PrimaryKeyEntity
 
 interface ICRUDService<E> where E : PrimaryKeyEntity {
     fun entityName(): String
-    fun find(id: Long): E
+    fun findById(id: Long): E
     fun findAll(): List<E>
     fun create(createDto: AbstractCreateDto<E>): E
     fun <CD : AbstractCreateDto<E>> createAll(createListDto: ValidDtoList<CD>)
