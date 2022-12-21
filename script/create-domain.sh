@@ -23,6 +23,8 @@ echo "${GREEN} > created ${DOMAIN_NAME} ${NC}"
 cd $DOMAIN_NAME
 
 mkdir -p "controller/dto"
+
+### Controller
 echo "package com.example.springbootkotlinexample.domain.${DOMAIN_NAME}.controller
 
 import com.example.springbootkotlinexample.common.base.controller.AbstractCRUDController
@@ -36,10 +38,16 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(\"/api/v1/${DOMAIN_NAME}\")
 class ${FILE_NAME}Controller(
+<<<<<<< Updated upstream
     val ${DOMAIN_NAME}Service: ${FILE_NAME}Service
+=======
+    private val ${DOMAIN_NAME}Service: ${FILE_NAME}Service
+>>>>>>> Stashed changes
 ) : AbstractCRUDController<${FILE_NAME}, Create${FILE_NAME}Dto, Update${FILE_NAME}Dto>(
     ${DOMAIN_NAME}Service
 )" > "controller/${FILE_NAME}Controller.kt"
+
+### CreateDTO
 echo "package com.example.springbootkotlinexample.domain.${DOMAIN_NAME}.controller.dto
 
 import com.example.springbootkotlinexample.common.base.controller.dto.AbstractCreateDto
@@ -56,6 +64,8 @@ class Create${FILE_NAME}Dto(
         )
     }
 }" > "controller/dto/Create${FILE_NAME}Dto.kt"
+
+### UpdateDTO
 echo "package com.example.springbootkotlinexample.domain.${DOMAIN_NAME}.controller.dto
 
 import com.example.springbootkotlinexample.common.base.controller.dto.AbstractUpdateDto
@@ -67,6 +77,8 @@ class Update${FILE_NAME}Dto(
 echo "${GREEN} > created controller ${NC}"
 
 mkdir -p "entity/repository"
+
+### Entity
 echo "package com.example.springbootkotlinexample.domain.${DOMAIN_NAME}.entity
 
 import com.example.springbootkotlinexample.common.base.controller.dto.AbstractUpdateDto
@@ -88,6 +100,8 @@ class ${FILE_NAME}(
         this.name = update${FILE_NAME}Dto.name ?: this.name
     }
 }" > "entity/${FILE_NAME}.kt"
+
+### Repository
 echo "package com.example.springbootkotlinexample.domain.${DOMAIN_NAME}.entity.repository
 
 import com.example.springbootkotlinexample.common.base.entity.repository.IRepository
@@ -99,6 +113,8 @@ interface ${FILE_NAME}Repository : IRepository<${FILE_NAME}>" > "entity/reposito
 echo "${GREEN} > created entity ${NC}"
 
 mkdir "service"
+
+### Service
 echo "package com.example.springbootkotlinexample.domain.${DOMAIN_NAME}.service
 
 import com.example.springbootkotlinexample.common.base.service.AbstractCRUDService
@@ -108,7 +124,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class ${FILE_NAME}Service(
+<<<<<<< Updated upstream
     val ${DOMAIN_NAME}Repository: ${FILE_NAME}Repository
+=======
+    private val ${DOMAIN_NAME}Repository: ${FILE_NAME}Repository
+>>>>>>> Stashed changes
 ) : AbstractCRUDService<${FILE_NAME}>(${DOMAIN_NAME}Repository)" > "service/${FILE_NAME}Service.kt"
 echo "${GREEN} > created service ${NC}"
 
