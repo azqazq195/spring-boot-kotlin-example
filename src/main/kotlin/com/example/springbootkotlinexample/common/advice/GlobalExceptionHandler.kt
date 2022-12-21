@@ -43,6 +43,7 @@ class GlobalExceptionHandler {
     @ExceptionHandler(Exception::class)
     fun unHandleException(e: Exception): ResponseDto<Void> {
         log.error("unhandled exception {}", e.message)
+        log.error(e.stackTraceToString())
         return ResponseDto(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
     }
 }

@@ -6,8 +6,8 @@ import com.example.springbootkotlinexample.common.base.response.ResponseDto
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 
-interface ICRUDController<E, CD, UD>
-        where E : PrimaryKeyEntity, CD : AbstractCreateDto<E>, UD : AbstractUpdateDto<E> {
+interface ICRUDController<E, CD, UD, RD>
+        where E : PrimaryKeyEntity, CD : AbstractCreateDto<E>, UD : AbstractUpdateDto<E>, RD : AbstractReadDto<E> {
     fun findById(@PathVariable id: Long): ResponseDto<Any>
     fun findAll(): ResponseDto<Any>
     fun create(@RequestBody createDto: CD): ResponseDto<Any>

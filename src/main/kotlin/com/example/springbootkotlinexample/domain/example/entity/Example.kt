@@ -1,7 +1,9 @@
 package com.example.springbootkotlinexample.domain.example.entity
 
+import com.example.springbootkotlinexample.common.base.controller.dto.AbstractReadDto
 import com.example.springbootkotlinexample.common.base.controller.dto.AbstractUpdateDto
 import com.example.springbootkotlinexample.common.base.entity.AbstractAuditingEntity
+import com.example.springbootkotlinexample.domain.example.controller.dto.ReadExampleDto
 import com.example.springbootkotlinexample.domain.example.controller.dto.UpdateExampleDto
 import com.example.springbootkotlinexample.domain.example.entity.constants.ExampleEnum
 import jakarta.persistence.Column
@@ -38,5 +40,14 @@ class Example(
         this.name = updateExampleDto.name ?: this.name
         this.content = updateExampleDto.content ?: this.content
         this.count = updateExampleDto.count ?: this.count
+    }
+
+    override fun <RD : AbstractReadDto<E>, E> toReadDto(): RD {
+        return ReadExampleDto(
+            name = this.name,
+            content = this.content,
+            count = this.count,
+            enum = this.enum
+        ) as RD
     }
 }

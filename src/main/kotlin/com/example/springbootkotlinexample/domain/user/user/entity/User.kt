@@ -1,5 +1,6 @@
 package com.example.springbootkotlinexample.domain.user.user.entity
 
+import com.example.springbootkotlinexample.common.base.controller.dto.AbstractReadDto
 import com.example.springbootkotlinexample.common.base.controller.dto.AbstractUpdateDto
 import com.example.springbootkotlinexample.common.base.entity.AbstractAuditingEntity
 import com.example.springbootkotlinexample.domain.user.user.entity.constants.GenderEnum
@@ -123,6 +124,10 @@ class User(
     override fun isEnabled(): Boolean = true
 
     override fun <UD : AbstractUpdateDto<E>, E> update(dto: UD) {
+        TODO("Not yet implemented")
+    }
+
+    override fun <RD : AbstractReadDto<E>, E> toReadDto(): RD {
         TODO("Not yet implemented")
     }
 }

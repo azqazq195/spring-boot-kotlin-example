@@ -5,4 +5,6 @@ import com.example.springbootkotlinexample.domain.product.entity.Product
 
 class UpdateProductDto(
     val name: String?,
+    val price: Int?,
+    val brandId: Long?,
 ) : AbstractUpdateDto<Product>()
