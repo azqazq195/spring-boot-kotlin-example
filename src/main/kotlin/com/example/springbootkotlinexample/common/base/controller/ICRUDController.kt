@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody
 
 interface ICRUDController<E, CD, UD>
         where E : PrimaryKeyEntity, CD : AbstractCreateDto<E>, UD : AbstractUpdateDto<E> {
-    fun find(@PathVariable id: Long): ResponseDto<Any>
+    fun findById(@PathVariable id: Long): ResponseDto<Any>
     fun findAll(): ResponseDto<Any>
     fun create(@RequestBody createDto: CD): ResponseDto<Any>
     fun createAll(@RequestBody createDtoList: ValidDtoList<CD>): ResponseDto<Any>
