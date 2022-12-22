@@ -1,44 +1,30 @@
 package com.example.springbootkotlinexample.common.base.controller
 
-import com.example.springbootkotlinexample.common.base.controller.dto.*
-import com.example.springbootkotlinexample.common.base.entity.PrimaryKeyEntity
+import com.example.springbootkotlinexample.common.base.controller.dto.ValidDtoList
 import com.example.springbootkotlinexample.common.base.response.ResponseDto
-import com.example.springbootkotlinexample.common.base.service.ICRUDService
-import com.example.springbootkotlinexample.common.base.service.exception.RequiredArgumentException
-import com.example.springbootkotlinexample.config.logger
+import com.example.springbootkotlinexample.common.base.service.AbstractService
+import com.example.springbootkotlinexample.common.base.controller.dto.IReadDto
+import com.example.springbootkotlinexample.common.base.controller.dto.IUpdateDto
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.lang.reflect.ParameterizedType
 
-
-abstract class AbstractCRUDController<E, CD, UD, RD>(
-    private val service: ICRUDService<E>
-) : ICRUDController<E, CD, UD, RD> where E : PrimaryKeyEntity, CD : AbstractCreateDto<E>, UD : AbstractUpdateDto<E>, RD : AbstractReadDto<E> {
-
-    private fun readDto(entity: E): RD {
-        return entity.toReadDto()
-    }
-
+abstract class AbstractController<E, CD, UD, RD>(
+    private val service: AbstractService<E, CD, UD, RD>
+) : IController<CD, UD> where E : Any, UD : IUpdateDto, RD : IReadDto {
     @GetMapping("/{id}")
     override fun findById(@PathVariable id: Long): ResponseDto<Any> {
-        return ResponseDto(HttpStatus.OK, readDto(service.findById(id)))
+        return ResponseDto(HttpStatus.OK, service.findById(id))
     }
 
     @GetMapping()
     override fun findAll(): ResponseDto<Any> {
-        return ResponseDto(HttpStatus.OK, service.findAll().map { readDto(it) })
-    }
-
-    @DeleteMapping("/{id}")
-    override fun delete(@PathVariable id: Long): ResponseDto<Any> {
-        service.delete(id)
-        return ResponseDto(HttpStatus.OK)
+        return ResponseDto(HttpStatus.OK, service.findAll())
     }
 
     @PostMapping()
     override fun create(@RequestBody @Valid createDto: CD): ResponseDto<Any> {
-        return ResponseDto(HttpStatus.CREATED, readDto(service.create(createDto)))
+        return ResponseDto(HttpStatus.CREATED, service.create(createDto))
     }
 
     @PostMapping("/bulk")
@@ -57,5 +43,11 @@ abstract class AbstractCRUDController<E, CD, UD, RD>(
     override fun updateAll(@RequestBody @Valid updateDtoList: ValidDtoList<UD>): ResponseDto<Any> {
         service.updateAll(updateDtoList)
         return ResponseDto(HttpStatus.NO_CONTENT)
+    }
+
+    @DeleteMapping("/{id}")
+    override fun delete(@PathVariable id: Long): ResponseDto<Any> {
+        service.deleteById(id)
+        return ResponseDto(HttpStatus.ACCEPTED)
     }
 }
