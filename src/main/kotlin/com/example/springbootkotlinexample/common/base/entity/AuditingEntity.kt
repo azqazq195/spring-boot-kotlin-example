@@ -1,4 +1,4 @@
-package com.example.springbootkotlinexample.common.base.controller.dto
+package com.example.springbootkotlinexample.common.base.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
