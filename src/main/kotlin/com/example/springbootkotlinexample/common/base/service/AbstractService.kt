@@ -28,7 +28,7 @@ abstract class AbstractService<E, CD, UD, RD>(
     }
 
     override fun findAll(): List<RD> {
-        return repository.findAll().map { mapper.toDto(it) }
+        return mapper.toDto(repository.findAll())
     }
 
     override fun create(createDto: CD): RD {
@@ -36,7 +36,7 @@ abstract class AbstractService<E, CD, UD, RD>(
     }
 
     override fun createAll(createListDto: ValidDtoList<CD>) {
-        createListDto.list.map { create(it) }
+        repository.saveAll(mapper.toEntity(createListDto.list))
     }
 
     override fun update(id: Long, updateDto: UD) {
