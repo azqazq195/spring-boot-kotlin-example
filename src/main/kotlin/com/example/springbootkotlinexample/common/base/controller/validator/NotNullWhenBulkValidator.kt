@@ -1,4 +1,4 @@
-package com.example.springbootkotlinexample.common.base.validator
+package com.example.springbootkotlinexample.common.base.controller.validator
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintValidator
