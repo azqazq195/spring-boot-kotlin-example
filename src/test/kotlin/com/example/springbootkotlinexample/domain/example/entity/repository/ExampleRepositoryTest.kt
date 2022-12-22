@@ -2,9 +2,7 @@ package com.example.springbootkotlinexample.domain.example.entity.repository
 
 import com.example.springbootkotlinexample.domain.example.entity.Example
 import com.example.springbootkotlinexample.domain.example.entity.constants.ExampleEnum
-import com.example.springbootkotlinexample.domain.example.service.ExampleServiceTest
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import kotlinx.coroutines.Dispatchers
