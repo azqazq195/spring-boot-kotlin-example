@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.product.controller
 
-import com.example.springbootkotlinexample.common.base.controller.AbstractCRUDController
+import com.example.springbootkotlinexample.common.base.controller.AbstractController
 import com.example.springbootkotlinexample.domain.product.controller.dto.CreateProductDto
 import com.example.springbootkotlinexample.domain.product.controller.dto.ReadProductDto
 import com.example.springbootkotlinexample.domain.product.controller.dto.UpdateProductDto
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/product")
 class ProductController(
-    productService: ProductService
-) : AbstractCRUDController<Product, CreateProductDto, UpdateProductDto, ReadProductDto>(
-    productService
+    private val productService: ProductService
+) : AbstractController<Product, CreateProductDto, UpdateProductDto, ReadProductDto>(
+    productService,
 )

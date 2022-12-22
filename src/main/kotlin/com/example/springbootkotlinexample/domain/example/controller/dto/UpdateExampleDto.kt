@@ -1,7 +1,8 @@
 package com.example.springbootkotlinexample.domain.example.controller.dto
 
-import com.example.springbootkotlinexample.common.base.controller.dto.AbstractUpdateDto
-import com.example.springbootkotlinexample.domain.example.entity.Example
+import com.example.springbootkotlinexample.common.base.service.exception.RequiredArgumentException
+import com.example.springbootkotlinexample.common.base.controller.validator.NotNullWhenBulk
+import com.example.springbootkotlinexample.common.base.controller.dto.IUpdateDto
 import com.example.springbootkotlinexample.domain.example.entity.constants.ExampleEnum
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.NotNull
@@ -18,7 +19,10 @@ import jakarta.validation.constraints.Size
  * @see ExampleEnum
  *
  */
-class UpdateExampleDto(
+data class UpdateExampleDto(
+    @field:NotNullWhenBulk
+    val id: Long?,
+
     @field:Size(min = 2, max = 5)
     val name: String?,
 
@@ -30,4 +34,9 @@ class UpdateExampleDto(
 
     @field:NotNull
     val enum: ExampleEnum?,
-) : AbstractUpdateDto<Example>()
+) : IUpdateDto {
+    override fun getId(): Long {
+        if (id == null) throw RequiredArgumentException("id")
+        return id
+    }
+}
