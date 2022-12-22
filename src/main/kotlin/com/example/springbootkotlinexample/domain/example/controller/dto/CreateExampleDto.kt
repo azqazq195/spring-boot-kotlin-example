@@ -1,7 +1,5 @@
 package com.example.springbootkotlinexample.domain.example.controller.dto
 
-import com.example.springbootkotlinexample.common.base.controller.dto.AbstractCreateDto
-import com.example.springbootkotlinexample.domain.example.entity.Example
 import com.example.springbootkotlinexample.domain.example.entity.constants.ExampleEnum
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.NotNull
@@ -22,7 +20,7 @@ import jakarta.validation.constraints.Size
  * @see ExampleEnum
  *
  */
-class CreateExampleDto(
+data class CreateExampleDto(
     @field:NotNull
     @field:Size(min = 2, max = 5)
     val name: String?,
@@ -37,13 +35,4 @@ class CreateExampleDto(
 
     @field:NotNull
     val enum: ExampleEnum?,
-) : AbstractCreateDto<Example>() {
-    override fun toEntity(): Example {
-        return Example(
-            name = name!!,
-            content = content!!,
-            count = count!!,
-            enum = enum!!,
-        )
-    }
-}
+)

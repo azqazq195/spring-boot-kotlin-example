@@ -1,8 +1,16 @@
 package com.example.springbootkotlinexample.domain.brand.controller.dto
 
-import com.example.springbootkotlinexample.common.base.controller.dto.AbstractUpdateDto
-import com.example.springbootkotlinexample.domain.brand.entity.Brand
+import com.example.springbootkotlinexample.common.base.service.exception.RequiredArgumentException
+import com.example.springbootkotlinexample.common.base.controller.validator.NotNullWhenBulk
+import com.example.springbootkotlinexample.common.base.controller.dto.IUpdateDto
 
-class UpdateBrandDto(
+data class UpdateBrandDto(
+    @field:NotNullWhenBulk
+    val id: Long? = null,
     val name: String?,
-) : AbstractUpdateDto<Brand>()
+) : IUpdateDto {
+    override fun getId(): Long {
+        if (id == null) throw RequiredArgumentException("id")
+        return id
+    }
+}
