@@ -1,6 +1,6 @@
 package com.example.springbootkotlinexample.domain.brand.entity
 
-import com.example.springbootkotlinexample.common.base.controller.dto.AuditingEntity
+import com.example.springbootkotlinexample.common.base.entity.AuditingEntity
 import com.example.springbootkotlinexample.domain.product.entity.Product
 import jakarta.persistence.*
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
