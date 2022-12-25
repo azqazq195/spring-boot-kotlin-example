@@ -6,5 +6,5 @@ import jakarta.validation.constraints.NotNull
 class ValidDtoList<T>(
     @field:Valid
     @field:NotNull
-    val list: List<T>
+    val data: List<T>
 )

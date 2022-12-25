@@ -1,7 +1,7 @@
 package com.example.springbootkotlinexample.common.base.controller
 
 import com.example.springbootkotlinexample.common.base.controller.dto.ValidDtoList
-import com.example.springbootkotlinexample.common.base.response.ResponseDto
+import com.example.springbootkotlinexample.common.base.controller.response.ResponseDto
 import com.example.springbootkotlinexample.common.base.service.AbstractService
 import com.example.springbootkotlinexample.common.base.controller.dto.IReadDto
 import com.example.springbootkotlinexample.common.base.controller.dto.IUpdateDto
@@ -28,8 +28,8 @@ abstract class AbstractController<E, CD, UD, RD>(
     }
 
     @PostMapping("/bulk")
-    override fun createAll(@RequestBody @Valid createDtoList: ValidDtoList<CD>): ResponseDto<Any> {
-        service.createAll(createDtoList)
+    override fun createAll(@RequestBody @Valid validDtoList: ValidDtoList<CD>): ResponseDto<Any> {
+        service.createAll(validDtoList.data)
         return ResponseDto(HttpStatus.CREATED)
     }
 
@@ -40,8 +40,8 @@ abstract class AbstractController<E, CD, UD, RD>(
     }
 
     @PatchMapping("/bulk")
-    override fun updateAll(@RequestBody @Valid updateDtoList: ValidDtoList<UD>): ResponseDto<Any> {
-        service.updateAll(updateDtoList)
+    override fun updateAll(@RequestBody @Valid validDtoList: ValidDtoList<UD>): ResponseDto<Any> {
+        service.updateAll(validDtoList.data)
         return ResponseDto(HttpStatus.NO_CONTENT)
     }
 
