@@ -1,6 +1,9 @@
 package com.example.springbootkotlinexample.domain.user.controller
 
+import com.example.springbootkotlinexample.common.advice.exception.NotSupportedException
 import com.example.springbootkotlinexample.common.base.controller.AbstractController
+import com.example.springbootkotlinexample.common.base.controller.dto.ValidDtoList
+import com.example.springbootkotlinexample.common.base.controller.response.ResponseDto
 import com.example.springbootkotlinexample.domain.user.controller.dto.CreateUserDto
 import com.example.springbootkotlinexample.domain.user.controller.dto.ReadUserDto
 import com.example.springbootkotlinexample.domain.user.controller.dto.UpdateUserDto
@@ -15,4 +18,12 @@ class UserController(
     private val userService: UserService
 ) : AbstractController<User, CreateUserDto, UpdateUserDto, ReadUserDto>(
     userService,
-)
+) {
+    override fun createAll(validDtoList: ValidDtoList<CreateUserDto>): ResponseDto<Any> {
+        throw NotSupportedException()
+    }
+
+    override fun updateAll(validDtoList: ValidDtoList<UpdateUserDto>): ResponseDto<Any> {
+        throw NotSupportedException()
+    }
+}

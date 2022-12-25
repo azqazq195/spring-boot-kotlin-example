@@ -1,8 +1,8 @@
 package com.example.springbootkotlinexample.common.advice
 
-import com.example.springbootkotlinexample.common.base.response.ResponseDto
+import com.example.springbootkotlinexample.common.base.controller.response.ResponseDto
 import com.example.springbootkotlinexample.common.advice.exception.BadRequestException
-import com.example.springbootkotlinexample.common.advice.exception.UnsupportedOperationException
+import com.example.springbootkotlinexample.common.advice.exception.NotSupportedException
 import com.example.springbootkotlinexample.config.logger
 import org.springframework.validation.FieldError
 import org.springframework.http.HttpStatus
@@ -21,9 +21,9 @@ class GlobalExceptionHandler {
         return ResponseDto(HttpStatus.BAD_REQUEST, e.message)
     }
 
-    @ExceptionHandler(UnsupportedOperationException::class)
-    fun handleUnsupportedOperationException(e: UnsupportedOperationException): ResponseDto<Void> {
-        log.info("unsupported operation exception {}", e.message)
+    @ExceptionHandler(NotSupportedException::class)
+    fun handleNotSupportedException(e: NotSupportedException): ResponseDto<Void> {
+        log.info("not supported exception {}", e.message)
         return ResponseDto(HttpStatus.BAD_REQUEST, e.message)
     }
 
