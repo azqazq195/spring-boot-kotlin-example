@@ -7,13 +7,16 @@ import com.example.springbootkotlinexample.domain.product.controller.dto.UpdateP
 import com.example.springbootkotlinexample.domain.product.entity.Product
 import com.example.springbootkotlinexample.domain.product.entity.mapper.ProductMapper
 import com.example.springbootkotlinexample.domain.product.entity.repository.ProductRepository
+import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Service
 
 @Service
 class ProductService(
     private val productMapper: ProductMapper,
-    private val productRepository: ProductRepository
-) : AbstractService<Product, CreateProductDto, UpdateProductDto, ReadProductDto>(
+    private val productRepository: ProductRepository,
+    private val jpaQueryFactory: JPAQueryFactory,
+    ) : AbstractService<Product, CreateProductDto, UpdateProductDto, ReadProductDto>(
     productMapper,
-    productRepository
+    productRepository,
+    jpaQueryFactory,
 )

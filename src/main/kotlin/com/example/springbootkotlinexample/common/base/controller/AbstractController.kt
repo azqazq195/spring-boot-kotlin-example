@@ -5,7 +5,10 @@ import com.example.springbootkotlinexample.common.base.controller.response.Respo
 import com.example.springbootkotlinexample.common.base.service.AbstractService
 import com.example.springbootkotlinexample.common.base.controller.dto.IReadDto
 import com.example.springbootkotlinexample.common.base.controller.dto.IUpdateDto
+import com.example.springbootkotlinexample.common.base.controller.dto.search.SearchDto
+import com.example.springbootkotlinexample.config.logger
 import jakarta.validation.Valid
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -20,6 +23,17 @@ abstract class AbstractController<E, CD, UD, RD>(
     @GetMapping()
     override fun findAll(): ResponseDto<Any> {
         return ResponseDto(HttpStatus.OK, service.findAll())
+    }
+
+    /**
+     * @param pageable
+     * * default number: 0
+     * * default page size: 20
+     * * default sort: unsorted (ex: name,id,brand.id,desc)
+     */
+    @PostMapping("/search")
+    override fun search(@RequestBody searchDto: SearchDto): ResponseDto<Any> {
+        return ResponseDto(HttpStatus.OK, service.search(searchDto))
     }
 
     @PostMapping()

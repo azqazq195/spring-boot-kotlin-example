@@ -7,13 +7,16 @@ import com.example.springbootkotlinexample.domain.brand.entity.Brand
 import com.example.springbootkotlinexample.domain.brand.entity.mapper.BrandMapper
 import com.example.springbootkotlinexample.domain.brand.entity.repository.BrandRepository
 import com.example.springbootkotlinexample.common.base.service.AbstractService
+import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Service
 
 @Service
 class BrandService(
     private val brandMapper: BrandMapper,
     private val brandRepository: BrandRepository,
+    private val jpaQueryFactory: JPAQueryFactory,
 ): AbstractService<Brand, CreateBrandDto, UpdateBrandDto, ReadBrandDto>(
     brandMapper,
-    brandRepository
+    brandRepository,
+    jpaQueryFactory
 )

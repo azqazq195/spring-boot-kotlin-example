@@ -8,6 +8,7 @@ import com.example.springbootkotlinexample.domain.user.controller.dto.UpdateUser
 import com.example.springbootkotlinexample.domain.user.entity.User
 import com.example.springbootkotlinexample.domain.user.entity.mapper.UserMapper
 import com.example.springbootkotlinexample.domain.user.entity.repository.UserRepository
+import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
@@ -15,10 +16,12 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     private val userMapper: UserMapper,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val jpaQueryFactory: JPAQueryFactory,
 ) : UserDetailsService, AbstractService<User, CreateUserDto, UpdateUserDto, ReadUserDto>(
     userMapper,
-    userRepository
+    userRepository,
+    jpaQueryFactory
 ) {
     fun isExistsByUsername(username: String): Boolean = userRepository.existsByUsername(username)
 

@@ -13,11 +13,10 @@ import org.springframework.stereotype.Component
 
 @Component
 class ProductMapper(
+    @PersistenceContext
+    private val entityManager: EntityManager,
     private val brandMapper: BrandMapper
 ) : IMapper<Product, CreateProductDto, UpdateProductDto, ReadProductDto> {
-
-    @PersistenceContext
-    private lateinit var entityManager: EntityManager
 
     override fun toDto(entity: Product): ReadProductDto {
         return ReadProductDto(

@@ -15,35 +15,35 @@ class ExampleRepositoryTest(
     @Autowired
     val exampleRepository: ExampleRepository,
 ) : DescribeSpec({
-    describe("ExampleRepository") {
-        context("initialization") {
-            it("should be defined") {
-                exampleRepository shouldNotBe null
-            }
-        }
-
-        context("save") {
-            it("should save an example") {
-                // given
-                val example = Example(
-                    name = "example",
-                    content = "content",
-                    count = 1,
-                    enum = ExampleEnum.MASTER
-                )
-
-                // when
-                val savedExample = withContext(Dispatchers.IO) {
-                    exampleRepository.save(example)
-                }
-
-                // then
-                example.id shouldNotBe null
-                example.name shouldBe savedExample.name
-                example.content shouldBe savedExample.content
-                example.count shouldBe savedExample.count
-                example.enum shouldBe savedExample.enum
-            }
-        }
-    }
+//    describe("ExampleRepository") {
+//        context("initialization") {
+//            it("should be defined") {
+//                exampleRepository shouldNotBe null
+//            }
+//        }
+//
+//        context("save") {
+//            it("should save an example") {
+//                // given
+//                val example = Example(
+//                    name = "example",
+//                    content = "content",
+//                    count = 1,
+//                    enum = ExampleEnum.MASTER
+//                )
+//
+//                // when
+//                val savedExample = withContext(Dispatchers.IO) {
+//                    exampleRepository.save(example)
+//                }
+//
+//                // then
+//                example.id shouldNotBe null
+//                example.name shouldBe savedExample.name
+//                example.content shouldBe savedExample.content
+//                example.count shouldBe savedExample.count
+//                example.enum shouldBe savedExample.enum
+//            }
+//        }
+//    }
 })
