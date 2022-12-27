@@ -2,7 +2,8 @@ package com.example.springbootkotlinexample.common.advice
 
 import com.example.springbootkotlinexample.common.base.controller.response.ResponseDto
 import com.example.springbootkotlinexample.common.advice.exception.BadRequestException
-import com.example.springbootkotlinexample.common.advice.exception.NotSupportedException
+import com.example.springbootkotlinexample.common.advice.exception.MethodNotAllowedException
+import com.example.springbootkotlinexample.common.advice.exception.NotFoundException
 import com.example.springbootkotlinexample.config.logger
 import org.springframework.validation.FieldError
 import org.springframework.http.HttpStatus
@@ -21,10 +22,16 @@ class GlobalExceptionHandler {
         return ResponseDto(HttpStatus.BAD_REQUEST, e.message)
     }
 
-    @ExceptionHandler(NotSupportedException::class)
-    fun handleNotSupportedException(e: NotSupportedException): ResponseDto<Void> {
-        log.info("not supported exception {}", e.message)
-        return ResponseDto(HttpStatus.BAD_REQUEST, e.message)
+    @ExceptionHandler(NotFoundException::class)
+    fun handleNotFoundException(e: NotFoundException): ResponseDto<Void> {
+        log.info("not found exception {}", e.message)
+        return ResponseDto(HttpStatus.NOT_FOUND, e.message)
+    }
+
+    @ExceptionHandler(MethodNotAllowedException::class)
+    fun handleMethodNotAllowedException(e: MethodNotAllowedException): ResponseDto<Void> {
+        log.info("method not allowed Exception {}", e.message)
+        return ResponseDto(HttpStatus.METHOD_NOT_ALLOWED, e.message)
     }
 
     @ExceptionHandler(HttpMessageNotReadableException::class)
