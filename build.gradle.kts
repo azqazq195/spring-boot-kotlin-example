@@ -50,15 +50,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // querydsl
-    // :jakarta로 명시하지 않으면 javax로 참조된다.
-    // 2019부터 java ee -> jakarta ee로 이름이 변경되었는데, querydsl은 아직 javax로 참조하고 있다.
-    implementation("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
-    kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
-    kotlin.sourceSets.main{
-        setBuildDir("$buildDir")
-    }
-
     // swager
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     // jwt
@@ -120,9 +111,9 @@ tasks.withType<Test> {
                 println("Test result: ${result.resultType}")
                 println(
                     "Test summary: ${result.testCount} tests, " +
-                            "${result.successfulTestCount} succeeded, " +
-                            "${result.failedTestCount} failed, " +
-                            "${result.skippedTestCount} skipped"
+                        "${result.successfulTestCount} succeeded, " +
+                        "${result.failedTestCount} failed, " +
+                        "${result.skippedTestCount} skipped"
                 )
             }
         }
