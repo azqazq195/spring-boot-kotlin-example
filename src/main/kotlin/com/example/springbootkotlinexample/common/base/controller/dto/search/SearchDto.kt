@@ -1,8 +1,11 @@
 package com.example.springbootkotlinexample.common.base.controller.dto.search
 
+import com.example.springbootkotlinexample.common.base.controller.dto.search.filter.FilterDto
+import com.example.springbootkotlinexample.common.base.controller.dto.search.sort.SortDto
+
 data class SearchDto(
-    val filters: List<FilterDto>? = null,
-    val sorts: List<SortDto>? = null,
+    val filters: List<FilterDto> = mutableListOf(),
+    val sorts: List<SortDto> = mutableListOf(),
     val page: Int = 0,
-    val size: Int = 20,
+    val size: Int = 20
 )

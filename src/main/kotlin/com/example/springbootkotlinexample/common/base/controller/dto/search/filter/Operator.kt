@@ -1,5 +1,6 @@
-package com.example.springbootkotlinexample.common.base.controller.dto.search
+package com.example.springbootkotlinexample.common.base.controller.dto.search.filter
 
+import com.example.springbootkotlinexample.utils.SearchUtils
 import jakarta.persistence.criteria.CriteriaBuilder
 import jakarta.persistence.criteria.Expression
 import jakarta.persistence.criteria.Predicate
@@ -15,8 +16,9 @@ enum class Operator {
             predicate: Predicate
         ): Predicate {
             val value: Any = filter.fieldType.parse(filter.value.toString())
-            val key: Expression<Any> = root.get(filter.key)
-            return cb.and(cb.equal(key, value), predicate)
+            val path = SearchUtils.getRelationPath(root, filter.relationEntityList)
+            val property: Expression<Any> = path.get(filter.property)
+            return cb.and(cb.equal(property, value), predicate)
         }
     },
     NOT_EQUAL {
@@ -27,8 +29,9 @@ enum class Operator {
             predicate: Predicate
         ): Predicate {
             val value: Any = filter.fieldType.parse(filter.value.toString())
-            val key: Expression<Any> = root.get(filter.key)
-            return cb.and(cb.notEqual(key, value), predicate)
+            val path = SearchUtils.getRelationPath(root, filter.relationEntityList)
+            val property: Expression<Any> = path.get(filter.property)
+            return cb.and(cb.notEqual(property, value), predicate)
         }
     },
     LIKE {
@@ -39,8 +42,9 @@ enum class Operator {
             predicate: Predicate
         ): Predicate {
             val value: Any = filter.fieldType.parse(filter.value.toString())
-            val key: Expression<String> = root.get(filter.key)
-            return cb.and(cb.like(cb.upper(key), "%" + value.toString().uppercase() + "%"), predicate)
+            val path = SearchUtils.getRelationPath(root, filter.relationEntityList)
+            val property: Expression<String> = path.get(filter.property)
+            return cb.and(cb.like(cb.upper(property), "%" + value.toString().uppercase() + "%"), predicate)
         }
     },
     IN {
@@ -51,7 +55,9 @@ enum class Operator {
             predicate: Predicate
         ): Predicate {
             val values: List<Any> = filter.values!!
-            val inClause: CriteriaBuilder.In<Any> = cb.`in`(root.get(filter.key))
+            val path = SearchUtils.getRelationPath(root, filter.relationEntityList)
+            val property: Expression<Any> = path.get(filter.property)
+            val inClause: CriteriaBuilder.In<Any> = cb.`in`(property)
             for (value in values) {
                 inClause.value(filter.fieldType.parse(value.toString()))
             }
@@ -65,22 +71,23 @@ enum class Operator {
             filter: FilterDto,
             predicate: Predicate
         ): Predicate {
+            val path = SearchUtils.getRelationPath(root, filter.relationEntityList)
             val value: Any = filter.fieldType.parse(filter.value.toString())
             val valueTo: Any = filter.fieldType.parse(filter.valueTo.toString())
             if (filter.fieldType === FieldType.DATE) {
                 val startDate: LocalDateTime = value as LocalDateTime
                 val endDate: LocalDateTime = valueTo as LocalDateTime
-                val key: Expression<LocalDateTime> = root.get(filter.key)
+                val property: Expression<LocalDateTime> = path.get(filter.property)
                 return cb.and(
-                    cb.and(cb.greaterThanOrEqualTo(key, startDate), cb.lessThanOrEqualTo(key, endDate)),
+                    cb.and(cb.greaterThanOrEqualTo(property, startDate), cb.lessThanOrEqualTo(property, endDate)),
                     predicate
                 )
             }
             if (filter.fieldType !== FieldType.CHAR && filter.fieldType !== FieldType.BOOLEAN) {
                 val start = value as Number
                 val end = valueTo as Number
-                val key: Expression<Number> = root.get(filter.key)
-                return cb.and(cb.and(cb.ge(key, start), cb.le(key, end)), predicate)
+                val property: Expression<Number> = path.get(filter.property)
+                return cb.and(cb.and(cb.ge(property, start), cb.le(property, end)), predicate)
             }
             return predicate
         }
