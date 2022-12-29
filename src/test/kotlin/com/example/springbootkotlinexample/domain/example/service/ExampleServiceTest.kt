@@ -1,19 +1,13 @@
 package com.example.springbootkotlinexample.domain.example.service
 
-import com.example.springbootkotlinexample.domain.example.controller.dto.CreateExampleDto
-import com.example.springbootkotlinexample.domain.example.entity.constants.ExampleEnum
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class ExampleServiceTest(
     @Autowired
-    val exampleService: ExampleService,
+    val exampleService: ExampleService
 ) : BehaviorSpec({
 //    Given("CreateExampleDto") {
 //        val createExampleDto = createExampleDto
@@ -41,7 +35,7 @@ class ExampleServiceTest(
 //        }
 //    }
 })
-//{
+// {
 //    companion object {
 //        val createExampleDto = CreateExampleDto(
 //            name = "example",
@@ -50,4 +44,4 @@ class ExampleServiceTest(
 //            enum = ExampleEnum.MASTER
 //        )
 //    }
-//}
+// }

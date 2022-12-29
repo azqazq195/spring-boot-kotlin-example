@@ -17,19 +17,16 @@ spring:
     hibernate:
       ddl-auto: create-drop
     # JPA 가 수행하는 SQL 을 볼 수 있다.
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
+  #    show-sql: true
+  #    properties:
+  #      hibernate:
+  #        format_sql: true
   # 콘솔 확인 을 위한 always
   output:
     ansi:
       enabled: always
 # 파라미터 확인을 위한 trace
-logging:
-  level:
-    org.hibernate.type: debug
+#logging:
+#  level:
+#    org.hibernate.type: trace
 
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html

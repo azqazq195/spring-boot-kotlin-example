@@ -29,7 +29,7 @@ class UserMapper : IMapper<User, CreateUserDto, UpdateUserDto, ReadUserDto> {
             withdrawReason = entity.withdrawReason,
             isBlocked = entity.isBlocked,
             lastLoginAt = entity.lastLoginAt,
-            adminRemark = entity.adminRemark,
+            adminRemark = entity.adminRemark
         )
     }
 
@@ -45,7 +45,7 @@ class UserMapper : IMapper<User, CreateUserDto, UpdateUserDto, ReadUserDto> {
             phone = createDto.phone!!,
             address = createDto.address,
             addressDetail = createDto.addressDetail,
-            gender = createDto.gender,
+            gender = createDto.gender
         )
     }
 
@@ -66,7 +66,7 @@ class UserMapper : IMapper<User, CreateUserDto, UpdateUserDto, ReadUserDto> {
             isReceivedEmail = updateDto.isReceivedEmail ?: entity.isReceivedEmail,
             withdrawReason = updateDto.withdrawReason ?: entity.withdrawReason,
             isBlocked = updateDto.isBlocked ?: entity.isBlocked,
-            adminRemark = updateDto.adminRemark ?: entity.adminRemark,
+            adminRemark = updateDto.adminRemark ?: entity.adminRemark
         )
     }
 }

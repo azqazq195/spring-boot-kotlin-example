@@ -14,5 +14,5 @@ import org.springframework.web.bind.annotation.RestController
 class ExampleController(
     private val exampleService: ExampleService
 ) : AbstractController<Example, CreateExampleDto, UpdateExampleDto, ReadExampleDto>(
-    exampleService,
+    exampleService
 )

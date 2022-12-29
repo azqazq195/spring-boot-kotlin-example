@@ -13,5 +13,5 @@ data class CreateProductDto(
 
     @field:NotNull
     @field:ExistsEntity(entity = Brand::class)
-    val brandId: Long?,
+    val brandId: Long?
 )

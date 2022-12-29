@@ -1,16 +1,19 @@
 package com.example.springbootkotlinexample.common.base.controller
 
-import com.example.springbootkotlinexample.common.base.controller.dto.ValidDtoList
-import com.example.springbootkotlinexample.common.base.controller.response.ResponseDto
-import com.example.springbootkotlinexample.common.base.service.AbstractService
 import com.example.springbootkotlinexample.common.base.controller.dto.IReadDto
 import com.example.springbootkotlinexample.common.base.controller.dto.IUpdateDto
+import com.example.springbootkotlinexample.common.base.controller.dto.ValidDtoList
 import com.example.springbootkotlinexample.common.base.controller.dto.search.SearchDto
-import com.example.springbootkotlinexample.config.logger
+import com.example.springbootkotlinexample.common.base.controller.response.ResponseDto
+import com.example.springbootkotlinexample.common.base.service.AbstractService
 import jakarta.validation.Valid
-import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 
 abstract class AbstractController<E, CD, UD, RD>(
     private val service: AbstractService<E, CD, UD, RD>
@@ -25,24 +28,24 @@ abstract class AbstractController<E, CD, UD, RD>(
         return ResponseDto(HttpStatus.OK, service.findAll())
     }
 
-    /**
-     * @param pageable
-     * * default number: 0
-     * * default page size: 20
-     * * default sort: unsorted (ex: name,id,brand.id,desc)
-     */
-    @PostMapping("/search")
+    @GetMapping("/search")
     override fun search(@RequestBody searchDto: SearchDto): ResponseDto<Any> {
         return ResponseDto(HttpStatus.OK, service.search(searchDto))
     }
 
     @PostMapping()
-    override fun create(@RequestBody @Valid createDto: CD): ResponseDto<Any> {
+    override fun create(
+        @RequestBody @Valid
+        createDto: CD
+    ): ResponseDto<Any> {
         return ResponseDto(HttpStatus.CREATED, service.create(createDto))
     }
 
     @PostMapping("/bulk")
-    override fun createAll(@RequestBody @Valid validDtoList: ValidDtoList<CD>): ResponseDto<Any> {
+    override fun createAll(
+        @RequestBody @Valid
+        validDtoList: ValidDtoList<CD>
+    ): ResponseDto<Any> {
         service.createAll(validDtoList.data)
         return ResponseDto(HttpStatus.CREATED)
     }
@@ -54,7 +57,10 @@ abstract class AbstractController<E, CD, UD, RD>(
     }
 
     @PatchMapping("/bulk")
-    override fun updateAll(@RequestBody @Valid validDtoList: ValidDtoList<UD>): ResponseDto<Any> {
+    override fun updateAll(
+        @RequestBody @Valid
+        validDtoList: ValidDtoList<UD>
+    ): ResponseDto<Any> {
         service.updateAll(validDtoList.data)
         return ResponseDto(HttpStatus.NO_CONTENT)
     }

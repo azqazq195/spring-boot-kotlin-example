@@ -7,16 +7,13 @@ import com.example.springbootkotlinexample.domain.example.controller.dto.UpdateE
 import com.example.springbootkotlinexample.domain.example.entity.Example
 import com.example.springbootkotlinexample.domain.example.entity.repository.ExampleRepository
 import com.example.springbootkotlinexample.domain.example.entity.repository.mapper.ExampleMapper
-import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Service
 
 @Service
 class ExampleService(
     private val exampleMapper: ExampleMapper,
-    private val exampleRepository: ExampleRepository,
-    private val jpaQueryFactory: JPAQueryFactory,
-    ): AbstractService<Example, CreateExampleDto, UpdateExampleDto, ReadExampleDto>(
+    private val exampleRepository: ExampleRepository
+) : AbstractService<Example, CreateExampleDto, UpdateExampleDto, ReadExampleDto>(
     exampleMapper,
-    exampleRepository,
-    jpaQueryFactory,
+    exampleRepository
 )

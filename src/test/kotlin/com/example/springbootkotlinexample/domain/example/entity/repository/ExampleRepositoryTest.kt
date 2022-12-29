@@ -1,19 +1,13 @@
 package com.example.springbootkotlinexample.domain.example.entity.repository
 
-import com.example.springbootkotlinexample.domain.example.entity.Example
-import com.example.springbootkotlinexample.domain.example.entity.constants.ExampleEnum
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
 class ExampleRepositoryTest(
     @Autowired
-    val exampleRepository: ExampleRepository,
+    val exampleRepository: ExampleRepository
 ) : DescribeSpec({
 //    describe("ExampleRepository") {
 //        context("initialization") {

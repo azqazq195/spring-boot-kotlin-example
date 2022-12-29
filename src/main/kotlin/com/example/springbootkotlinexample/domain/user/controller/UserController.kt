@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(
     private val userService: UserService
 ) : AbstractController<User, CreateUserDto, UpdateUserDto, ReadUserDto>(
-    userService,
+    userService
 ) {
     override fun createAll(validDtoList: ValidDtoList<CreateUserDto>): ResponseDto<Any> {
         throw MethodNotAllowedException()

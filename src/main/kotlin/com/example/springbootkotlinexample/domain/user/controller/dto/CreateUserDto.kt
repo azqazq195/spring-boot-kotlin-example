@@ -33,5 +33,5 @@ data class CreateUserDto(
     @field:Size(max = 100)
     val addressDetail: String?,
 
-    val gender: GenderEnum?,
+    val gender: GenderEnum?
 )
