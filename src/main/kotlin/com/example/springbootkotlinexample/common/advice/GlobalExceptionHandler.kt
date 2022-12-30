@@ -1,13 +1,14 @@
 package com.example.springbootkotlinexample.common.advice
 
-import com.example.springbootkotlinexample.common.base.controller.response.ResponseDto
 import com.example.springbootkotlinexample.common.advice.exception.BadRequestException
+import com.example.springbootkotlinexample.common.advice.exception.InternalServerErrorException
 import com.example.springbootkotlinexample.common.advice.exception.MethodNotAllowedException
 import com.example.springbootkotlinexample.common.advice.exception.NotFoundException
+import com.example.springbootkotlinexample.common.base.controller.response.ResponseDto
 import com.example.springbootkotlinexample.config.logger
-import org.springframework.validation.FieldError
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 class GlobalExceptionHandler {
     private val log = logger()
 
+    /**
+     * custom exception
+     */
     @ExceptionHandler(BadRequestException::class)
     fun handleBadRequestException(e: BadRequestException): ResponseDto<Void> {
         log.info("bad request exception {}", e.message)
@@ -28,6 +32,15 @@ class GlobalExceptionHandler {
         return ResponseDto(HttpStatus.NOT_FOUND, e.message)
     }
 
+    @ExceptionHandler(InternalServerErrorException::class)
+    fun handleInternalServerErrorException(e: InternalServerErrorException): ResponseDto<Void> {
+        log.error("internal server error exception exception {}", e.message)
+        return ResponseDto(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
+    }
+
+    /**
+     * validation exception
+     */
     @ExceptionHandler(MethodNotAllowedException::class)
     fun handleMethodNotAllowedException(e: MethodNotAllowedException): ResponseDto<Void> {
         log.info("method not allowed Exception {}", e.message)

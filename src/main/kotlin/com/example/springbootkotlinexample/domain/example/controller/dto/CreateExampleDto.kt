@@ -34,5 +34,5 @@ data class CreateExampleDto(
     val count: Int?,
 
     @field:NotNull
-    val enum: ExampleEnum?,
+    val enum: ExampleEnum?
 )

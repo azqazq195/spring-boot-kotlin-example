@@ -1,23 +1,21 @@
 package com.example.springbootkotlinexample.domain.product.entity.mapper
 
+import com.example.springbootkotlinexample.common.base.entity.mapper.IMapper
+import com.example.springbootkotlinexample.common.base.service.exception.NotFoundEntityException
 import com.example.springbootkotlinexample.domain.brand.entity.Brand
 import com.example.springbootkotlinexample.domain.brand.entity.mapper.BrandMapper
-import com.example.springbootkotlinexample.common.base.entity.mapper.IMapper
 import com.example.springbootkotlinexample.domain.product.controller.dto.CreateProductDto
 import com.example.springbootkotlinexample.domain.product.controller.dto.ReadProductDto
 import com.example.springbootkotlinexample.domain.product.controller.dto.UpdateProductDto
 import com.example.springbootkotlinexample.domain.product.entity.Product
 import jakarta.persistence.EntityManager
-import jakarta.persistence.PersistenceContext
 import org.springframework.stereotype.Component
 
 @Component
 class ProductMapper(
+    private val entityManager: EntityManager,
     private val brandMapper: BrandMapper
 ) : IMapper<Product, CreateProductDto, UpdateProductDto, ReadProductDto> {
-
-    @PersistenceContext
-    private lateinit var entityManager: EntityManager
 
     override fun toDto(entity: Product): ReadProductDto {
         return ReadProductDto(
@@ -26,7 +24,7 @@ class ProductMapper(
             price = entity.price,
             brand = brandMapper.toDto(entity.brand),
             createdAt = entity.audit.createdAt,
-            modifiedAt = entity.audit.modifiedAt,
+            modifiedAt = entity.audit.modifiedAt
         )
     }
 
@@ -34,7 +32,7 @@ class ProductMapper(
         return Product(
             name = createDto.name!!,
             price = createDto.price!!,
-            brand = findBrand(createDto.brandId!!),
+            brand = findBrand(createDto.brandId!!)
         )
     }
 
@@ -42,9 +40,11 @@ class ProductMapper(
         return entity.copy(
             name = updateDto.name ?: entity.name,
             price = updateDto.price ?: entity.price,
-            brand = updateDto.brandId?.let { findBrand(it) } ?: entity.brand,
+            brand = updateDto.brandId?.let { findBrand(it) } ?: entity.brand
         )
     }
 
-    fun findBrand(id: Long): Brand = entityManager.find(Brand::class.java, id)
+    fun findBrand(id: Long): Brand {
+        return entityManager.find(Brand::class.java, id) ?: throw NotFoundEntityException(Brand::class.java.simpleName)
+    }
 }

@@ -14,5 +14,5 @@ import org.springframework.web.bind.annotation.RestController
 class ProductController(
     private val productService: ProductService
 ) : AbstractController<Product, CreateProductDto, UpdateProductDto, ReadProductDto>(
-    productService,
+    productService
 )

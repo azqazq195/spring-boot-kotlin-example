@@ -1,7 +1,11 @@
 package com.example.springbootkotlinexample.domain.user.entity
 
 import com.example.springbootkotlinexample.domain.user.entity.constants.GenderEnum
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
 import org.hibernate.annotations.Comment
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -92,7 +96,7 @@ data class User(
 
     @Column(columnDefinition = "TEXT", nullable = true)
     @Comment("관리용 회원 비고 정보")
-    val adminRemark: String? = null,
+    val adminRemark: String? = null
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = ArrayList()
     override fun getUsername(): String = username

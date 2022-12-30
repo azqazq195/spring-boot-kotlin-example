@@ -4,5 +4,5 @@ import jakarta.validation.constraints.NotNull
 
 data class CreateBrandDto(
     @field:NotNull
-    val name: String?,
+    val name: String?
 )

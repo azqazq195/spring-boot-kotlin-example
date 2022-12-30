@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration
 import javax.sql.DataSource
 
 // TODO H2를 사용하는 Profile에서만 동작하도록 설정
-//@Profile(*["local", "development"])
+// @Profile(*["local", "development"])
 @Configuration
 class H2ServerConfig {
     @Bean
@@ -16,6 +16,5 @@ class H2ServerConfig {
     fun h2TcpServer(): DataSource {
         Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092").start()
         return HikariDataSource()
-
     }
 }

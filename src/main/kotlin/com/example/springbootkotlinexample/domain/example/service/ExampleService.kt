@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 class ExampleService(
     private val exampleMapper: ExampleMapper,
     private val exampleRepository: ExampleRepository
-): AbstractService<Example, CreateExampleDto, UpdateExampleDto, ReadExampleDto>(
+) : AbstractService<Example, CreateExampleDto, UpdateExampleDto, ReadExampleDto>(
     exampleMapper,
     exampleRepository
 )

@@ -2,7 +2,15 @@ package com.example.springbootkotlinexample.domain.example.entity
 
 import com.example.springbootkotlinexample.common.base.entity.AuditingEntity
 import com.example.springbootkotlinexample.domain.example.entity.constants.ExampleEnum
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Embedded
+import jakarta.persistence.Entity
+import jakarta.persistence.EntityListeners
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
 @Entity(name = "tb_example")

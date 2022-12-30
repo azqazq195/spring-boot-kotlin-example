@@ -1,4 +1,4 @@
-package com.example.springbootkotlinexample.config
+package com.example.springbootkotlinexample.config // ktlint-disable filename
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 class SpringBootKotlinExampleApplication
 
 fun main(args: Array<String>) {
-	runApplication<SpringBootKotlinExampleApplication>(*args)
+    runApplication<SpringBootKotlinExampleApplication>(*args)
 }

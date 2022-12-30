@@ -7,5 +7,5 @@ data class ReadBrandDto(
     val id: Long?,
     val name: String,
     val createdAt: LocalDateTime?,
-    val modifiedAt: LocalDateTime?,
+    val modifiedAt: LocalDateTime?
 ) : IReadDto

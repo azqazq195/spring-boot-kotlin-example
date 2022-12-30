@@ -2,8 +2,8 @@ package com.example.springbootkotlinexample.domain.example.entity.repository.map
 
 import com.example.springbootkotlinexample.common.base.entity.mapper.IMapper
 import com.example.springbootkotlinexample.domain.example.controller.dto.CreateExampleDto
-import com.example.springbootkotlinexample.domain.example.controller.dto.UpdateExampleDto
 import com.example.springbootkotlinexample.domain.example.controller.dto.ReadExampleDto
+import com.example.springbootkotlinexample.domain.example.controller.dto.UpdateExampleDto
 import com.example.springbootkotlinexample.domain.example.entity.Example
 import org.springframework.stereotype.Component
 
@@ -16,7 +16,7 @@ class ExampleMapper : IMapper<Example, CreateExampleDto, UpdateExampleDto, ReadE
             count = entity.count,
             enum = entity.enum,
             createdAt = entity.audit.createdAt,
-            modifiedAt = entity.audit.modifiedAt,
+            modifiedAt = entity.audit.modifiedAt
         )
     }
 
@@ -25,7 +25,7 @@ class ExampleMapper : IMapper<Example, CreateExampleDto, UpdateExampleDto, ReadE
             name = createDto.name!!,
             content = createDto.content!!,
             count = createDto.count!!,
-            enum = createDto.enum!!,
+            enum = createDto.enum!!
         )
     }
 
@@ -34,8 +34,7 @@ class ExampleMapper : IMapper<Example, CreateExampleDto, UpdateExampleDto, ReadE
             name = updateDto.name ?: entity.name,
             content = updateDto.content ?: entity.content,
             count = updateDto.count ?: entity.count,
-            enum = updateDto.enum ?: entity.enum,
+            enum = updateDto.enum ?: entity.enum
         )
     }
-
 }

@@ -1,7 +1,7 @@
 package com.example.springbootkotlinexample.domain.user.service
 
-import com.example.springbootkotlinexample.common.base.service.exception.NotFoundEntityException
 import com.example.springbootkotlinexample.common.base.service.AbstractService
+import com.example.springbootkotlinexample.common.base.service.exception.NotFoundEntityException
 import com.example.springbootkotlinexample.domain.user.controller.dto.CreateUserDto
 import com.example.springbootkotlinexample.domain.user.controller.dto.ReadUserDto
 import com.example.springbootkotlinexample.domain.user.controller.dto.UpdateUserDto
@@ -20,11 +20,7 @@ class UserService(
     userMapper,
     userRepository
 ) {
-    fun isExistsByUsername(username: String): Boolean = userRepository.existsByUsername(username)
-
     override fun loadUserByUsername(username: String): UserDetails {
         return userRepository.findByUsername(username).orElseThrow { NotFoundEntityException(entityName()) }
     }
 }
-
-

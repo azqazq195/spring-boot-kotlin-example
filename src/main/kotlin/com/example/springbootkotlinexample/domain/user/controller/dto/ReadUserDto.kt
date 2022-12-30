@@ -22,5 +22,5 @@ data class ReadUserDto(
     val withdrawReason: String?,
     val isBlocked: Boolean,
     val lastLoginAt: Date?,
-    val adminRemark: String?,
+    val adminRemark: String?
 ) : IReadDto
