@@ -1,6 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     id("org.springframework.boot") version "3.0.0"
@@ -72,6 +73,14 @@ dependencies {
     testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
     // mockk
     testImplementation("io.mockk:mockk:1.13.2")
+}
+
+tasks.named<BootBuildImage>("bootBuildImage") {
+    imageName.set("kopring")
+    docker {
+//        environment.set(mapOf("SPRING_PROFILES_ACTIVE" to "prod"))
+        environment.set(mapOf("LC_ALL" to "C.UTF-8"))
+    }
 }
 
 tasks.withType<KotlinCompile> {
