@@ -58,3 +58,17 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### script ###
+/script/create-domain.sh
+/script/build-image.sh
+
+
+### gradle properties ###
+gradle.properties
+
+### Application YAML ###
+/src/main/resources/application-*.yml
+
+### database ###
+/docker/*/volume
