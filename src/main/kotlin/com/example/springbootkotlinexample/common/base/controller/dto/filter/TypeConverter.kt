@@ -1,4 +1,4 @@
-package com.example.springbootkotlinexample.common.base.controller.dto.search.filter
+package com.example.springbootkotlinexample.common.base.controller.dto.filter
 
 import com.example.springbootkotlinexample.common.advice.exception.InternalServerErrorException
 import kotlin.reflect.KClass

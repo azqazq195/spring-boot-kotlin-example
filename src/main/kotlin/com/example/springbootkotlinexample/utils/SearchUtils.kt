@@ -1,7 +1,7 @@
 package com.example.springbootkotlinexample.utils
 
-import com.example.springbootkotlinexample.common.base.controller.dto.search.filter.FieldType
-import com.example.springbootkotlinexample.common.base.controller.dto.search.filter.TypeConverter
+import com.example.springbootkotlinexample.common.base.controller.dto.filter.FieldType
+import com.example.springbootkotlinexample.common.base.controller.dto.filter.TypeConverter
 import jakarta.persistence.criteria.Path
 import jakarta.persistence.criteria.Root
 import kotlin.reflect.KClass

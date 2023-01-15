@@ -1,4 +1,4 @@
-package com.example.springbootkotlinexample.common.base.controller.dto.search.sort
+package com.example.springbootkotlinexample.common.base.controller.dto.sort
 
 import com.example.springbootkotlinexample.utils.SearchUtils
 import jakarta.persistence.criteria.CriteriaBuilder

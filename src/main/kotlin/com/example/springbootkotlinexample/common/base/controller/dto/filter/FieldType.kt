@@ -1,4 +1,4 @@
-package com.example.springbootkotlinexample.common.base.controller.dto.search.filter
+package com.example.springbootkotlinexample.common.base.controller.dto.filter
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
