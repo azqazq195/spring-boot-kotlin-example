@@ -1,32 +1,3 @@
 spring:
-  datasource:
-    # hikari 쓰고 안쓰고 차이점?
-    hikari:
-      # 설치된 H2 DB와 연결 URL
-      # 빌드 종료시 in-memory database는 이미 종료되는데 종료를 시도하여 에러가 발생한다. 아래 옵션을 붙여준다.
-      # ;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
-      jdbc-url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
-      driver-class-name: org.h2.Driver
-      # springboot 2.4 부터는 username 이 꼭 있어야합니다. 없으면 에러가 발생합니다.
-      username: sa
-      password:
-  jpa:
-    # 객체를 보고 자동으로 테이블 생성 여부. 생성 - create, 비생성 - none
-    # 테스트이기 때문에 create 로 설정하며
-    # 실제로는 none 으로 합니다. create 이면 기존의 테이블을 전부 밀어버립니다.
-    hibernate:
-      ddl-auto: create-drop
-    # JPA 가 수행하는 SQL 을 볼 수 있다.
-  #    show-sql: true
-  #    properties:
-  #      hibernate:
-  #        format_sql: true
-  # 콘솔 확인 을 위한 always
-  output:
-    ansi:
-      enabled: always
-# 파라미터 확인을 위한 trace
-#logging:
-#  level:
-#    org.hibernate.type: trace
-
+  profiles:
+    active: development
