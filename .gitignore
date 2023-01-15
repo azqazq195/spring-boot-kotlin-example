@@ -71,4 +71,7 @@ gradle.properties
 /src/main/resources/application-*.yml
 
 ### database ###
-/docker/*/volume
+/docker/**/volume
+
+### github actions ###
+/.github/workflows/**
