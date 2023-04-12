@@ -1,4 +1,4 @@
-package com.example.jwt.config
+package com.example.jwt._common.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -28,9 +28,10 @@ class SecurityConfig {
 
             .and()
             .authorizeHttpRequests()
-            .requestMatchers("/auth/sign-in").permitAll()
-            .requestMatchers("/auth/sign-up").permitAll()
-            .anyRequest().authenticated()
+//            .requestMatchers("/auth/sign-in").permitAll()
+//            .requestMatchers("/auth/sign-up").permitAll()
+//            .anyRequest().authenticated()
+            .anyRequest().permitAll()
 
 //            .and()
 //            .exceptionHandling()
