@@ -5,6 +5,8 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
+    kotlin("plugin.jpa") version "1.7.22"
+    kotlin("plugin.allopen") version "1.7.22"
 }
 
 group = "com.example"
@@ -15,9 +17,21 @@ repositories {
     mavenCentral()
 }
 
+allOpen {
+    annotation("javax.persistence.Entity")
+}
+
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+//    implementation("com.h2database:h2")
+    implementation("com.mysql:mysql-connector-j:8.0.32")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
