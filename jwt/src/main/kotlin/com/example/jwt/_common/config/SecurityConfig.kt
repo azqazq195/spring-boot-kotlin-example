@@ -1,5 +1,9 @@
 package com.example.jwt._common.config
 
+import com.example.jwt.auth.application.JwtProvider
+import com.example.jwt.auth.infrastructure.AuthenticationEntryPointImpl
+import com.example.jwt.auth.infrastructure.JwtAuthenticationFilter
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -8,11 +12,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig(
+    private val authenticationEntryPointImpl: AuthenticationEntryPointImpl,
+    private val jwtProvider: JwtProvider,
+    private val objectMapper: ObjectMapper
+) {
     @Bean
     @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -28,20 +37,20 @@ class SecurityConfig {
 
             .and()
             .authorizeHttpRequests()
-//            .requestMatchers("/auth/sign-in").permitAll()
-//            .requestMatchers("/auth/sign-up").permitAll()
-//            .anyRequest().authenticated()
-            .anyRequest().permitAll()
-
-//            .and()
-//            .exceptionHandling()
-//            .authenticationEntryPoint(CustomAuthenticationEntryPoint())
+            .requestMatchers("/auth/sign-in").permitAll()
+            .requestMatchers("/auth/sign-up").permitAll()
+            .anyRequest().authenticated()
+//            .anyRequest().permitAll()
 
             .and()
-//            .addFilterBefore(
-//                JwtAuthenticationFilter(jwtTokenProvider),
-//                UsernamePasswordAuthenticationFilter::class.java
-//            )
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPointImpl)
+
+            .and()
+            .addFilterBefore(
+                JwtAuthenticationFilter(jwtProvider, objectMapper),
+                UsernamePasswordAuthenticationFilter::class.java
+            )
             .build()
     }
 
