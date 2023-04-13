@@ -9,7 +9,7 @@ data class User(
     @Column(length = 20, nullable = false, unique = true)
     val email: String,
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 255, nullable = false)
     val password: String,
 
     @Column(length = 10, nullable = false)
