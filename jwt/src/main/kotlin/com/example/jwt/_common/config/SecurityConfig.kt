@@ -1,6 +1,6 @@
 package com.example.jwt._common.config
 
-import com.example.jwt.auth.application.JwtProvider
+import com.example.jwt.auth.application.JwtService
 import com.example.jwt.auth.infrastructure.AuthenticationEntryPointImpl
 import com.example.jwt.auth.infrastructure.JwtAuthenticationFilter
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 @EnableWebSecurity
 class SecurityConfig(
     private val authenticationEntryPointImpl: AuthenticationEntryPointImpl,
-    private val jwtProvider: JwtProvider,
+    private val jwtService: JwtService,
     private val objectMapper: ObjectMapper
 ) {
     @Bean
@@ -39,16 +39,17 @@ class SecurityConfig(
             .authorizeHttpRequests()
             .requestMatchers("/auth/sign-in").permitAll()
             .requestMatchers("/auth/sign-up").permitAll()
+            .requestMatchers("/auth/refresh").permitAll()
             .anyRequest().authenticated()
-//            .anyRequest().permitAll()
 
             .and()
             .exceptionHandling()
-            .authenticationEntryPoint(authenticationEntryPointImpl)
+            .authenticationEntryPoint(authenticationEntryPointImpl) // 401 에러 핸들링
+//            .accessDeniedHandler(authenticationEntryPointImpl) // 403 에러 핸들링
 
             .and()
             .addFilterBefore(
-                JwtAuthenticationFilter(jwtProvider, objectMapper),
+                JwtAuthenticationFilter(jwtService, objectMapper),
                 UsernamePasswordAuthenticationFilter::class.java
             )
             .build()

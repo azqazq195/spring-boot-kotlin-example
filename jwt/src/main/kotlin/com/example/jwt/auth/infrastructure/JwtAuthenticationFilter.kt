@@ -3,8 +3,7 @@ package com.example.jwt.auth.infrastructure
 import com.example.jwt._common.dto.EmptyResult
 import com.example.jwt._common.util.LocalDateTimeSerializer
 import com.example.jwt._common.util.logger
-import com.example.jwt.auth.JwtStorage
-import com.example.jwt.auth.application.JwtProvider
+import com.example.jwt.auth.application.JwtService
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import jakarta.servlet.FilterChain
@@ -19,7 +18,7 @@ import org.springframework.web.filter.GenericFilterBean
 import java.time.LocalDateTime
 
 class JwtAuthenticationFilter(
-    private val jwtProvider: JwtProvider,
+    private val jwtService: JwtService,
     private val objectMapper: ObjectMapper
 ) : GenericFilterBean() {
     companion object {
@@ -30,7 +29,7 @@ class JwtAuthenticationFilter(
     private val log = logger()
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, filterChain: FilterChain) {
-        val token = jwtProvider.resolveToken((request as HttpServletRequest))
+        val token = jwtService.resolveToken((request as HttpServletRequest))
 
         // 토큰 확인
         if (token == null) {
@@ -40,25 +39,14 @@ class JwtAuthenticationFilter(
         }
 
         // 유효성 검사
-        if (!jwtProvider.validateToken(token)) {
+        if (!jwtService.validateToken(token)) {
             log.info("token is not valid")
             filterChain.doFilter(request, response)
             return
         }
 
-        // 로그아웃 검사
-        if (JwtStorage.isSignOut(token)) {
-            log.info("token is expired")
-            writeResponse(
-                response as HttpServletResponse,
-                HttpStatus.UNAUTHORIZED,
-                SIGN_OUT_EXCEPTION_MESSAGE
-            )
-            return
-        }
-
         try {
-            val auth: Authentication = jwtProvider.getAuthentication(token)
+            val auth: Authentication = jwtService.getAuthentication(token)
             SecurityContextHolder.getContext().authentication = auth
             log.info("token is valid")
             filterChain.doFilter(request, response)
