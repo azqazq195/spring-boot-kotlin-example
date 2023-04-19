@@ -1,6 +1,6 @@
 package com.example.jwt.auth.dto
 
-data class SignInResponse(
+data class TokenResponse(
     val accessToken: String,
-//    val refreshToken: String
+    val refreshToken: String
 )
