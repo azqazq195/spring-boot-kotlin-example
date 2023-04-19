@@ -26,10 +26,11 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // jwt
@@ -38,8 +39,10 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
     // database
-    implementation("com.h2database:h2")
+    implementation("mysql:mysql-connector-java:8.0.32")
 
+    implementation("com.h2database:h2")
+    testImplementation("it.ozimov:embedded-redis:0.7.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.mockk:mockk:1.13.4")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")

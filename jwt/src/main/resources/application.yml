@@ -6,10 +6,11 @@ spring:
 
   datasource:
     hikari:
-      jdbc-url: jdbc:h2:mem:test;
-      driver-class-name: org.h2.Driver
-      username: sa
-      password:
+      jdbc-url: jdbc:mysql://localhost:3306/jwt
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: jwt
+      password: jwt
+
 
   jpa:
     hibernate:
@@ -18,6 +19,11 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
   output:
     ansi:
@@ -29,3 +35,4 @@ server:
 jwt:
   secret: WjJaa1ptZGtabXhyWjJwa2JHWnJaMnB6WVhOa2FtdG9ZWE5yWkdwaGFITmthMnBoYUhOa0NnZ2ZkZmdkZmxrZ2pkbGZrZ2pzYXNkamtoYXNrZGphaHNka2phaHNkCg
   access-token-expire-time: 1800000
+  refresh-token-expire-time: 1800000
