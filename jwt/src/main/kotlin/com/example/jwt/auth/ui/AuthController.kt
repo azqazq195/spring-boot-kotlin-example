@@ -7,9 +7,7 @@ import com.example.jwt.auth.application.AuthService
 import com.example.jwt.auth.dto.SignInRequest
 import com.example.jwt.auth.dto.SignUpRequest
 import com.example.jwt.auth.dto.TokenRequest
-import com.example.jwt.auth.dto.TokenResponse
 import com.example.jwt.user.domain.User
-import com.example.jwt.user.dto.UserDto
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -24,7 +22,7 @@ class AuthController(
     @PostMapping("/sign-in")
     fun signIn(
         @RequestBody @Valid signInRequest: SignInRequest
-    ): ResponseEntity<SingleResult<TokenResponse>> {
+    ): ResponseEntity<SingleResult> {
         val tokenResponse = authService.signIn(signInRequest)
 
         return ResponseDto.of(
@@ -59,7 +57,7 @@ class AuthController(
     @PostMapping("/refresh")
     fun refresh(
         @RequestBody @Valid tokenRequest: TokenRequest
-    ): ResponseEntity<SingleResult<TokenResponse>> {
+    ): ResponseEntity<SingleResult> {
         val tokenResponse = authService.refresh(tokenRequest)
 
         return ResponseDto.of(
@@ -72,7 +70,7 @@ class AuthController(
     @GetMapping("/me")
     fun me(
         @CurrentUser currentUser: User
-    ): ResponseEntity<SingleResult<UserDto>> {
+    ): ResponseEntity<SingleResult> {
         val user = authService.me(currentUser)
 
         return ResponseDto.of(

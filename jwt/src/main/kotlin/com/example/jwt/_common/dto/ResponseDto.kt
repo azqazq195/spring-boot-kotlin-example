@@ -16,11 +16,11 @@ class ResponseDto {
                 ), status
             )
 
-        fun <T> of(
+        fun of(
             status: HttpStatus,
             message: String? = null,
-            data: T
-        ): ResponseEntity<SingleResult<T>> =
+            data: Any
+        ): ResponseEntity<SingleResult> =
             ResponseEntity(
                 SingleResult(
                     statusCode = status.value(),
@@ -29,11 +29,11 @@ class ResponseDto {
                 ), status
             )
 
-        fun <T> of(
+        fun of(
             status: HttpStatus,
             message: String? = null,
-            data: List<T>
-        ): ResponseEntity<ListResult<T>> =
+            data: List<Any>
+        ): ResponseEntity<ListResult> =
             ResponseEntity(
                 ListResult(
                     statusCode = status.value(),
