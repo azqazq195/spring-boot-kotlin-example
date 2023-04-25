@@ -1,7 +1,6 @@
 package com.example.jwt.auth.application
 
 import com.example.jwt._common.util.RedisDao
-import com.example.jwt._common.util.logger
 import com.example.jwt.auth.dto.TokenRequest
 import com.example.jwt.auth.dto.TokenResponse
 import com.example.jwt.user.application.UserDetailsServiceImpl
@@ -79,7 +78,6 @@ class JwtService(
     }
 
     fun refresh(tokenRequest: TokenRequest): TokenResponse {
-        logger().info("tokenRequest: $tokenRequest")
         val user = userDetailsServiceImpl.loadUserByUsername(getUserPk(tokenRequest.accessToken)).user
         val refreshToken = redisDao.get(user.email)
         if (refreshToken != tokenRequest.refreshToken) throw RuntimeException("RefreshToken is not valid")
