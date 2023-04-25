@@ -34,5 +34,5 @@ server:
 
 jwt:
   secret: WjJaa1ptZGtabXhyWjJwa2JHWnJaMnB6WVhOa2FtdG9ZWE5yWkdwaGFITmthMnBoYUhOa0NnZ2ZkZmdkZmxrZ2pkbGZrZ2pzYXNkamtoYXNrZGphaHNka2phaHNkCg
-  access-token-expire-time: 1800000
+  access-token-expire-time: 6000
   refresh-token-expire-time: 1800000

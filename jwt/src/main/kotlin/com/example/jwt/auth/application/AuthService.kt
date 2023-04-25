@@ -1,5 +1,6 @@
 package com.example.jwt.auth.application
 
+import com.example.jwt.auth.application.exception.PasswordNotMatchException
 import com.example.jwt.auth.dto.SignInRequest
 import com.example.jwt.auth.dto.SignUpRequest
 import com.example.jwt.auth.dto.TokenRequest
@@ -21,7 +22,13 @@ class AuthService(
 ) {
     fun signIn(signInRequest: SignInRequest): TokenResponse {
         val user = userDetailsServiceImpl.loadUserByUsername(signInRequest.email!!).user
-            .apply { if (!passwordEncoder.matches(signInRequest.password!!, password)) throw PasswordMatchException() }
+            .apply {
+                if (!passwordEncoder.matches(
+                        signInRequest.password!!,
+                        password
+                    )
+                ) throw PasswordNotMatchException()
+            }
 
         return jwtService.createToken(user)
     }

@@ -1,6 +1,7 @@
 package com.example.jwt.auth.infrastructure
 
 import com.example.jwt._common.dto.EmptyResult
+import com.example.jwt._common.exception.ErrorCode
 import com.example.jwt._common.util.LocalDateTimeSerializer
 import com.example.jwt._common.util.logger
 import com.example.jwt.auth.application.JwtService
@@ -11,7 +12,6 @@ import jakarta.servlet.ServletRequest
 import jakarta.servlet.ServletResponse
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.http.HttpStatus
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.GenericFilterBean
@@ -21,10 +21,6 @@ class JwtAuthenticationFilter(
     private val jwtService: JwtService,
     private val objectMapper: ObjectMapper
 ) : GenericFilterBean() {
-    companion object {
-        const val SIGN_OUT_EXCEPTION_MESSAGE = "인증정보가 만료되었습니다."
-        const val INVALID_TOKEN_EXCEPTION_MESSAGE = "인증정보가 유효하지 않습니다."
-    }
 
     private val log = logger()
 
@@ -53,25 +49,24 @@ class JwtAuthenticationFilter(
         } catch (e: Exception) {
             writeResponse(
                 response as HttpServletResponse,
-                HttpStatus.UNAUTHORIZED,
-                e.message ?: INVALID_TOKEN_EXCEPTION_MESSAGE
+                ErrorCode.INVALID_TOKEN
             )
         }
     }
 
-    private fun writeResponse(response: HttpServletResponse, status: HttpStatus, message: String) {
+    private fun writeResponse(response: HttpServletResponse, errorCode: ErrorCode) {
         val simpleModule = SimpleModule()
         simpleModule.addSerializer(LocalDateTime::class.java, LocalDateTimeSerializer())
         objectMapper.registerModule(simpleModule)
 
-        response.status = status.value()
+        response.status = errorCode.status.value()
         response.contentType = "application/json"
         response.characterEncoding = "UTF-8"
         response.writer.write(
             objectMapper.writeValueAsString(
                 EmptyResult(
-                    statusCode = HttpStatus.UNAUTHORIZED.value(),
-                    message = message,
+                    statusCode = errorCode.status.value(),
+                    message = errorCode.message,
                 )
             )
         )

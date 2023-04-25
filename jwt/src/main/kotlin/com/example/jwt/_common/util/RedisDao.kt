@@ -3,26 +3,29 @@ package com.example.jwt._common.util
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
 import java.time.Duration
+import java.util.*
 
 @Component
 class RedisDao(
     private val redisTemplate: RedisTemplate<String, Any>,
     private val redisBlackListTemplate: RedisTemplate<String, String>
 ) {
-    fun set(key: String, value: Any, expire: Long) {
-        redisTemplate.opsForValue().set(key, value, Duration.ofMillis(expire))
+    // refresh token handling
+    fun set(key: String, value: Any, duration: Duration) {
+        redisTemplate.opsForValue().set(key, value, duration)
     }
 
-    fun get(key: String): Any {
-        return redisTemplate.opsForValue().get(key) ?: throw RuntimeException("")
+    fun get(key: String): Optional<Any> {
+        return Optional.ofNullable(redisTemplate.opsForValue().get(key))
     }
 
     fun delete(key: String) {
         redisTemplate.delete(key)
     }
 
-    fun setBlackList(key: String, value: String, expire: Long) {
-        redisBlackListTemplate.opsForValue().set(key, value, Duration.ofMillis(expire))
+    // access token handling
+    fun setBlackList(key: String, value: String, duration: Duration) {
+        redisBlackListTemplate.opsForValue().set(key, value, duration)
     }
 
     fun hasKeyBlackList(key: String): Boolean {
