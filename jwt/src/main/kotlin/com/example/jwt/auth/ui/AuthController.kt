@@ -4,10 +4,9 @@ import com.example.jwt._common.dto.EmptyResult
 import com.example.jwt._common.dto.ResponseDto
 import com.example.jwt._common.dto.SingleResult
 import com.example.jwt.auth.application.AuthService
+import com.example.jwt.auth.dto.RefreshTokenRequest
 import com.example.jwt.auth.dto.SignInRequest
 import com.example.jwt.auth.dto.SignUpRequest
-import com.example.jwt.auth.dto.TokenRequest
-import com.example.jwt.user.domain.User
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -33,7 +32,9 @@ class AuthController(
     }
 
     @GetMapping("/sign-out")
-    fun signOut(auth: Authentication): ResponseEntity<EmptyResult> {
+    fun signOut(
+        auth: Authentication
+    ): ResponseEntity<EmptyResult> {
         authService.signOut(auth)
 
         return ResponseDto.of(
@@ -56,9 +57,9 @@ class AuthController(
 
     @PostMapping("/refresh")
     fun refresh(
-        @RequestBody @Valid tokenRequest: TokenRequest
+        @RequestBody @Valid refreshTokenRequest: RefreshTokenRequest
     ): ResponseEntity<SingleResult> {
-        val tokenResponse = authService.refresh(tokenRequest)
+        val tokenResponse = authService.refresh(refreshTokenRequest)
 
         return ResponseDto.of(
             message = "토큰 갱신 완료.",
@@ -69,9 +70,9 @@ class AuthController(
 
     @GetMapping("/me")
     fun me(
-        @CurrentUser currentUser: User
+        auth: Authentication
     ): ResponseEntity<SingleResult> {
-        val user = authService.me(currentUser)
+        val user = authService.me(auth)
 
         return ResponseDto.of(
             message = "사용자 조회 완료.",

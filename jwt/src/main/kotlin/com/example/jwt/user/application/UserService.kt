@@ -3,6 +3,8 @@ package com.example.jwt.user.application
 import com.example.jwt.auth.dto.SignUpRequest
 import com.example.jwt.user.application.exception.DuplicatedEmailException
 import com.example.jwt.user.application.exception.NotFoundUserException
+import com.example.jwt.user.application.exception.NotMatchPasswordException
+import com.example.jwt.user.domain.Authority
 import com.example.jwt.user.domain.UserRepository
 import com.example.jwt.user.dto.UserDto
 import jakarta.transaction.Transactional
@@ -14,9 +16,14 @@ class UserService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder
 ) {
-    fun select(id: Long): UserDto {
-        val user = userRepository.findById(id).orElseThrow { NotFoundUserException() }
+    fun findByEmail(email: String): UserDto {
+        val user = userRepository.findByEmail(email).orElseThrow { NotFoundUserException() }
+        return UserDto.of(user)
+    }
 
+    fun findByEmailAndPassword(email: String, password: String): UserDto {
+        val user = userRepository.findByEmail(email).orElseThrow { NotFoundUserException() }
+        if (!passwordEncoder.matches(password, user.password)) throw NotMatchPasswordException()
         return UserDto.of(user)
     }
 
@@ -27,7 +34,8 @@ class UserService(
 
         userRepository.save(
             signUpRequest.toUser(
-                passwordEncoder.encode(signUpRequest.password!!)
+                passwordEncoder.encode(signUpRequest.password!!),
+                setOf(Authority("ROLE_USER"))
             )
         )
     }

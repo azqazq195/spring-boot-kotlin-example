@@ -1,6 +1,6 @@
 package com.example.jwt._common.config
 
-import com.example.jwt.auth.application.JwtService
+import com.example.jwt.auth.application.TokenProvider
 import com.example.jwt.auth.infrastructure.AuthenticationEntryPointImpl
 import com.example.jwt.auth.infrastructure.JwtAuthenticationFilter
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 @EnableWebSecurity
 class SecurityConfig(
     private val authenticationEntryPointImpl: AuthenticationEntryPointImpl,
-    private val jwtService: JwtService,
+    private val tokenProvider: TokenProvider,
     private val objectMapper: ObjectMapper
 ) {
     @Bean
@@ -49,7 +49,7 @@ class SecurityConfig(
 
             .and()
             .addFilterBefore(
-                JwtAuthenticationFilter(jwtService, objectMapper),
+                JwtAuthenticationFilter(tokenProvider, objectMapper),
                 UsernamePasswordAuthenticationFilter::class.java
             )
             .build()

@@ -28,7 +28,7 @@ class RedisDao(
         redisBlackListTemplate.opsForValue().set(key, value, duration)
     }
 
-    fun hasKeyBlackList(key: String): Boolean {
+    fun hasKeyInBlackList(key: String): Boolean {
         return redisBlackListTemplate.hasKey(key)
     }
 }
