@@ -3,6 +3,8 @@ package com.example.jwt.user.domain
 import com.example.jwt._common.domain.DeletableEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.JoinTable
+import jakarta.persistence.ManyToMany
 
 @Entity(name = "tb_user")
 data class User(
@@ -16,5 +18,9 @@ data class User(
     val name: String,
 
     @Column(nullable = true)
-    val age: Int? = null
+    val age: Int? = null,
+
+    @ManyToMany
+    @JoinTable(name = "tb_user_authority")
+    val authorities: Set<Authority>
 ) : DeletableEntity()

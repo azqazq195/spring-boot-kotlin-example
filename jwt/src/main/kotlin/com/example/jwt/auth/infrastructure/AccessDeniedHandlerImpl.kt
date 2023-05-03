@@ -8,21 +8,23 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.MediaType
-import org.springframework.security.core.AuthenticationException
-import org.springframework.security.web.AuthenticationEntryPoint
+import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
-class AuthenticationEntryPointImpl(
+class AccessDeniedHandlerImpl(
     private val objectMapper: ObjectMapper
-) : AuthenticationEntryPoint {
-    override fun commence(
+
+) : AccessDeniedHandler {
+    override fun handle(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        authException: AuthenticationException
+        accessDeniedException: AccessDeniedException
     ) {
-        val errorCode = ErrorCode.UNAUTHORIZED
+        // TODO 중복코드 제거
+        val errorCode = ErrorCode.FORBIDDEN
         val simpleModule = SimpleModule()
         simpleModule.addSerializer(LocalDateTime::class.java, LocalDateTimeSerializer())
         objectMapper.registerModule(simpleModule)

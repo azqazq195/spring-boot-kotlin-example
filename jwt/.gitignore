@@ -36,5 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-### MYSQL ###
-docker/mysql/volume
+### Docker ###
+docker/mysql
+docker/redis

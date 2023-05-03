@@ -40,8 +40,10 @@ dependencies {
 
     // database
     implementation("mysql:mysql-connector-java:8.0.32")
+    implementation("org.flywaydb:flyway-core:9.17.0")
+    implementation("org.flywaydb:flyway-mysql:9.17.0")
 
-    implementation("com.h2database:h2")
+
     testImplementation("it.ozimov:embedded-redis:0.7.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.mockk:mockk:1.13.4")

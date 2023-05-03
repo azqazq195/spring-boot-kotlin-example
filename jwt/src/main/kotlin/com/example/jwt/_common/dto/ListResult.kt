@@ -1,7 +1,7 @@
 package com.example.jwt._common.dto
 
-class ListResult<T>(
+class ListResult(
     statusCode: Int,
     message: String?,
-    val data: List<T>,
+    val data: List<Any>,
 ) : EmptyResult(statusCode, message)

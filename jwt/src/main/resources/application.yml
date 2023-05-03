@@ -5,16 +5,22 @@ spring:
       path: /h2-console
 
   datasource:
-    hikari:
-      jdbc-url: jdbc:mysql://localhost:3306/jwt
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      username: jwt
-      password: jwt
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jwt
+    username: jwt
+    password: jwt
 
+
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+    locations:
+      - classpath:db/migration/{vendor}
+      - classpath:db/seed/local
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     properties:
       hibernate:
         format_sql: true
@@ -33,6 +39,10 @@ server:
   port: 8080
 
 jwt:
-  secret: WjJaa1ptZGtabXhyWjJwa2JHWnJaMnB6WVhOa2FtdG9ZWE5yWkdwaGFITmthMnBoYUhOa0NnZ2ZkZmdkZmxrZ2pkbGZrZ2pzYXNkamtoYXNrZGphaHNka2phaHNkCg
-  access-token-expire-time: 1800000
-  refresh-token-expire-time: 1800000
+  secret: and0LWV4YW1wbGUtYWNjZXNzLXRva2VuLXNlY3JldC1rZXk=
+  # 2시간 = 2 * 60 * 60 * 1000
+  access-token-expire-time: 720000
+
+  refresh-secret: and0LWV4YW1wbGUtcmVmcmVzaC10b2tlbi1zZWNyZXQta2V5
+  # 2주 = 14 * 24 * 60 * 60 * 1000
+  refresh-token-expire-time: 1209600000

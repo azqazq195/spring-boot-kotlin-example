@@ -1,10 +1,12 @@
 package com.example.jwt._common.dto
 
+import com.example.jwt._common.exception.ErrorCode
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
 class ResponseDto {
     companion object {
+        // noContent
         fun of(
             status: HttpStatus,
             message: String? = null
@@ -16,11 +18,12 @@ class ResponseDto {
                 ), status
             )
 
-        fun <T> of(
+        // single data
+        fun of(
             status: HttpStatus,
             message: String? = null,
-            data: T
-        ): ResponseEntity<SingleResult<T>> =
+            data: Any
+        ): ResponseEntity<SingleResult> =
             ResponseEntity(
                 SingleResult(
                     statusCode = status.value(),
@@ -29,17 +32,29 @@ class ResponseDto {
                 ), status
             )
 
-        fun <T> of(
+        // list data
+        fun of(
             status: HttpStatus,
             message: String? = null,
-            data: List<T>
-        ): ResponseEntity<ListResult<T>> =
+            data: List<Any>
+        ): ResponseEntity<ListResult> =
             ResponseEntity(
                 ListResult(
                     statusCode = status.value(),
                     message = message,
                     data = data
                 ), status
+            )
+
+        // error response
+        fun of(
+            error: ErrorCode
+        ): ResponseEntity<EmptyResult> =
+            ResponseEntity(
+                EmptyResult(
+                    statusCode = error.status.value(),
+                    message = error.message
+                ), error.status
             )
     }
 }

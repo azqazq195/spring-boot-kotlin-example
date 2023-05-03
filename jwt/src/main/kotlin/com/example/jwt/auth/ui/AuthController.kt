@@ -1,16 +1,14 @@
 package com.example.jwt.auth.ui
 
 import com.example.jwt._common.dto.EmptyResult
+import com.example.jwt._common.dto.ResponseDto
 import com.example.jwt._common.dto.SingleResult
-import com.example.jwt._common.util.logger
 import com.example.jwt.auth.application.AuthService
+import com.example.jwt.auth.dto.RefreshTokenRequest
 import com.example.jwt.auth.dto.SignInRequest
 import com.example.jwt.auth.dto.SignUpRequest
-import com.example.jwt.auth.dto.TokenRequest
-import com.example.jwt.auth.dto.TokenResponse
-import com.example.jwt.user.domain.User
-import com.example.jwt.user.dto.UserDto
 import jakarta.validation.Valid
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
@@ -23,34 +21,63 @@ class AuthController(
     @PostMapping("/sign-in")
     fun signIn(
         @RequestBody @Valid signInRequest: SignInRequest
-    ): ResponseEntity<SingleResult<TokenResponse>> {
-        return authService.signIn(signInRequest)
+    ): ResponseEntity<SingleResult> {
+        val tokenResponse = authService.signIn(signInRequest)
+
+        return ResponseDto.of(
+            message = "로그인 완료.",
+            status = HttpStatus.OK,
+            data = tokenResponse
+        )
     }
 
     @GetMapping("/sign-out")
-    fun signOut(auth: Authentication): ResponseEntity<EmptyResult> {
-        return authService.signOut(auth)
+    fun signOut(
+        auth: Authentication
+    ): ResponseEntity<EmptyResult> {
+        authService.signOut(auth)
+
+        return ResponseDto.of(
+            message = "로그아웃 완료.",
+            status = HttpStatus.OK,
+        )
     }
 
     @PostMapping("/sign-up")
     fun signUp(
         @RequestBody @Valid signUpRequest: SignUpRequest
     ): ResponseEntity<EmptyResult> {
-        return authService.signUp(signUpRequest)
+        authService.signUp(signUpRequest)
+
+        return ResponseDto.of(
+            message = "사용자 생성 완료.",
+            status = HttpStatus.CREATED
+        )
     }
 
     @PostMapping("/refresh")
     fun refresh(
-        @RequestBody @Valid tokenRequest: TokenRequest
-    ): ResponseEntity<SingleResult<TokenResponse>> {
-        logger().info("tokenRequest: $tokenRequest")
-        return authService.refresh(tokenRequest)
+        @RequestBody @Valid refreshTokenRequest: RefreshTokenRequest
+    ): ResponseEntity<SingleResult> {
+        val tokenResponse = authService.refresh(refreshTokenRequest)
+
+        return ResponseDto.of(
+            message = "토큰 갱신 완료.",
+            status = HttpStatus.OK,
+            data = tokenResponse
+        )
     }
 
     @GetMapping("/me")
     fun me(
-        @CurrentUser user: User
-    ): ResponseEntity<SingleResult<UserDto>> {
-        return authService.me(user)
+        auth: Authentication
+    ): ResponseEntity<SingleResult> {
+        val user = authService.me(auth)
+
+        return ResponseDto.of(
+            message = "사용자 조회 완료.",
+            status = HttpStatus.OK,
+            data = user
+        )
     }
 }
