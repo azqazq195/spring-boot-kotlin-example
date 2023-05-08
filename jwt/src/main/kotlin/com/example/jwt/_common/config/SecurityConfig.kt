@@ -1,9 +1,9 @@
 package com.example.jwt._common.config
 
 import com.example.jwt.auth.application.TokenProvider
+import com.example.jwt.auth.infrastructure.AccessDeniedHandlerImpl
 import com.example.jwt.auth.infrastructure.AuthenticationEntryPointImpl
 import com.example.jwt.auth.infrastructure.JwtAuthenticationFilter
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -19,8 +19,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 @EnableWebSecurity
 class SecurityConfig(
     private val authenticationEntryPointImpl: AuthenticationEntryPointImpl,
+    private val accessDeniedHandlerImpl: AccessDeniedHandlerImpl,
     private val tokenProvider: TokenProvider,
-    private val objectMapper: ObjectMapper
 ) {
     @Bean
     @Throws(Exception::class)
@@ -45,11 +45,11 @@ class SecurityConfig(
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(authenticationEntryPointImpl) // 401 에러 핸들링
-//            .accessDeniedHandler(authenticationEntryPointImpl) // 403 에러 핸들링
+            .accessDeniedHandler(accessDeniedHandlerImpl) // 403 에러 핸들링
 
             .and()
             .addFilterBefore(
-                JwtAuthenticationFilter(tokenProvider, objectMapper),
+                JwtAuthenticationFilter(tokenProvider),
                 UsernamePasswordAuthenticationFilter::class.java
             )
             .build()
