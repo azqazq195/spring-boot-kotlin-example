@@ -1,7 +1,7 @@
-package com.example.jwt._common.exception
+package com.example.jwt._common.util
 
 import com.example.jwt._common.dto.EmptyResult
-import com.example.jwt._common.util.LocalDateTimeSerializer
+import com.example.jwt._common.exception.ErrorCode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import jakarta.servlet.http.HttpServletResponse

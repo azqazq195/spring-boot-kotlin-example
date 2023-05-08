@@ -1,7 +1,7 @@
 package com.example.jwt.auth.infrastructure
 
 import com.example.jwt._common.exception.ErrorCode
-import com.example.jwt._common.exception.ExceptionUtils
+import com.example.jwt._common.util.ExceptionUtils
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.AuthenticationException
