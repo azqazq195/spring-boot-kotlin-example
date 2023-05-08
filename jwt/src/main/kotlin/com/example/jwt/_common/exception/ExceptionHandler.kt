@@ -22,6 +22,13 @@ class ExceptionHandler {
         return ResponseDto.of(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
     }
 
+    @ExceptionHandler(ApiException::class)
+    fun handleApiException(e: ApiException): ResponseEntity<EmptyResult> {
+        // TODO print stack trace only in development
+        e.printStackTrace()
+        return ResponseDto.of(e.errorCode)
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<EmptyResult> {
         // TODO print stack trace only in development
@@ -31,11 +38,11 @@ class ExceptionHandler {
         return ResponseDto.of(HttpStatus.BAD_REQUEST, message)
     }
 
-    @ExceptionHandler(ApiException::class)
-    fun handleApiException(e: ApiException): ResponseEntity<EmptyResult> {
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException::class)
+    fun handleAccessDeniedException(e: org.springframework.security.access.AccessDeniedException): ResponseEntity<EmptyResult> {
         // TODO print stack trace only in development
         e.printStackTrace()
-        return ResponseDto.of(e.errorCode)
+        return ResponseDto.of(ErrorCode.FORBIDDEN)
     }
 
 }
