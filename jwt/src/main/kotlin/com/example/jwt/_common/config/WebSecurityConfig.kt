@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(
+class WebSecurityConfig(
     private val authenticationEntryPointImpl: AuthenticationEntryPointImpl,
     private val accessDeniedHandlerImpl: AccessDeniedHandlerImpl,
     private val tokenProvider: TokenProvider,
