@@ -92,10 +92,10 @@ class TokenProvider(
         val claims = getClaims(token)
         val email = claims.subject
 
-        val authorities: Collection<GrantedAuthority?> =
+        val authorities: Collection<GrantedAuthority> =
             Arrays.stream(claims[AUTHORITIES].toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }
                 .toTypedArray())
-                .map { role: String? -> SimpleGrantedAuthority(role) }
+                .map { role: String -> SimpleGrantedAuthority(role.replace("[", "").replace("]", "")) }
                 .collect(Collectors.toList())
 
         return UsernamePasswordAuthenticationToken(email, token, authorities)
