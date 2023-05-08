@@ -40,6 +40,7 @@ class WebSecurityConfig(
             .requestMatchers("/auth/sign-in").permitAll()
             .requestMatchers("/auth/sign-up").permitAll()
             .requestMatchers("/auth/refresh").permitAll()
+            .requestMatchers("/**").hasAnyRole("USER", "ADMIN")
             .anyRequest().authenticated()
 
             .and()
