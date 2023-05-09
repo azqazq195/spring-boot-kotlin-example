@@ -1,6 +1,7 @@
-package com.example.jwt.user.domain
+package com.example.jwt.user.domain.repository
 
-import com.example.jwt._common.domain.DeletableRepository
+import com.example.jwt._common.domain.repository.DeletableRepository
+import com.example.jwt.user.domain.User
 import org.springframework.stereotype.Repository
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.example.jwt.auth.dto
+package com.example.jwt.auth.application.dto
 
 import jakarta.validation.constraints.NotBlank
 

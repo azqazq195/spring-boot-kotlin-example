@@ -1,7 +1,7 @@
 package com.example.jwt._common.exception
 
-import com.example.jwt._common.dto.EmptyResult
-import com.example.jwt._common.dto.ResponseDto
+import com.example.jwt._common.application.dto.EmptyResult
+import com.example.jwt._common.application.dto.ResponseDto
 import com.example.jwt._common.util.logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

@@ -1,13 +1,13 @@
-package com.example.jwt.auth.dto
+package com.example.jwt.auth.application.dto
 
 import com.example.jwt.auth.domain.Token
 
-data class TokenDto(
+data class TokenResponse(
     val accessToken: String,
     val refreshToken: String
 ) {
     companion object {
-        fun of(token: Token) = TokenDto(
+        fun of(token: Token) = TokenResponse(
             accessToken = token.accessToken,
             refreshToken = token.refreshToken
         )

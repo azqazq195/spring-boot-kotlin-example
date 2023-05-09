@@ -1,4 +1,4 @@
-package com.example.jwt._common.dto
+package com.example.jwt._common.application.dto
 
 import com.example.jwt._common.exception.ErrorCode
 import org.springframework.http.HttpStatus

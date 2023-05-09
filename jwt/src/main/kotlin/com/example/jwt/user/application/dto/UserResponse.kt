@@ -1,9 +1,9 @@
-package com.example.jwt.user.dto
+package com.example.jwt.user.application.dto
 
 import com.example.jwt.user.domain.User
 import java.time.LocalDateTime
 
-data class UserDto(
+data class UserResponse(
     val id: Long,
     val email: String,
     val authorities: List<String>,
@@ -11,7 +11,7 @@ data class UserDto(
     val modifiedAt: LocalDateTime
 ) {
     companion object {
-        fun of(user: User) = UserDto(
+        fun of(user: User) = UserResponse(
             id = user.id!!,
             email = user.email,
             authorities = user.authorities.map { it.name }.toList(),

@@ -2,14 +2,14 @@ package com.example.jwt.auth.application
 
 import com.example.jwt._common.util.RedisDao
 import com.example.jwt._common.util.logger
-import com.example.jwt.auth.application.exception.NotFoundRefreshTokenException
-import com.example.jwt.auth.application.exception.NotMatchAccessToken
+import com.example.jwt.auth.application.dto.RefreshTokenRequest
+import com.example.jwt.auth.application.dto.TokenResponse
 import com.example.jwt.auth.domain.Token
-import com.example.jwt.auth.domain.TokenRepository
-import com.example.jwt.auth.dto.RefreshTokenRequest
-import com.example.jwt.auth.dto.TokenDto
+import com.example.jwt.auth.domain.repository.TokenRepository
+import com.example.jwt.auth.exception.NotFoundRefreshTokenException
+import com.example.jwt.auth.exception.NotMatchAccessToken
 import com.example.jwt.user.application.UserService
-import com.example.jwt.user.dto.UserDto
+import com.example.jwt.user.application.dto.UserResponse
 import io.jsonwebtoken.*
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
@@ -58,7 +58,7 @@ class TokenProvider(
     }
 
     @Transactional
-    fun create(user: UserDto): TokenDto {
+    fun create(user: UserResponse): TokenResponse {
         val token = Token(
             email = user.email,
             accessToken = createAccessToken(user),
@@ -66,7 +66,7 @@ class TokenProvider(
             expiredAt = Date(System.currentTimeMillis() + refreshTokenExpireTime)
         )
         tokenRepository.save(token)
-        return TokenDto.of(token)
+        return TokenResponse.of(token)
     }
 
     @Transactional
@@ -76,7 +76,7 @@ class TokenProvider(
     }
 
     @Transactional
-    fun refresh(refreshTokenRequest: RefreshTokenRequest): TokenDto {
+    fun refresh(refreshTokenRequest: RefreshTokenRequest): TokenResponse {
         val token = tokenRepository.findByRefreshToken(refreshTokenRequest.refreshToken!!)
             .orElseThrow { NotFoundRefreshTokenException() }
 
@@ -124,7 +124,7 @@ class TokenProvider(
         return false
     }
 
-    private fun createAccessToken(user: UserDto): String {
+    private fun createAccessToken(user: UserResponse): String {
         val now = Date()
         val expiration = Date(now.time + accessTokenExpireTime)
 
@@ -137,7 +137,7 @@ class TokenProvider(
             .compact()
     }
 
-    private fun createRefreshToken(user: UserDto): String {
+    private fun createRefreshToken(user: UserResponse): String {
         val now = Date()
         val expiration = Date(now.time + refreshTokenExpireTime)
 

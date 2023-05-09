@@ -1,12 +1,12 @@
 package com.example.jwt.user.application
 
-import com.example.jwt.auth.dto.SignUpRequest
-import com.example.jwt.user.application.exception.DuplicatedEmailException
-import com.example.jwt.user.application.exception.NotFoundUserException
-import com.example.jwt.user.application.exception.NotMatchPasswordException
+import com.example.jwt.auth.application.dto.SignUpRequest
+import com.example.jwt.user.application.dto.UserResponse
 import com.example.jwt.user.domain.Authority
-import com.example.jwt.user.domain.UserRepository
-import com.example.jwt.user.dto.UserDto
+import com.example.jwt.user.domain.repository.UserRepository
+import com.example.jwt.user.exception.DuplicatedEmailException
+import com.example.jwt.user.exception.NotFoundUserException
+import com.example.jwt.user.exception.NotMatchPasswordException
 import jakarta.transaction.Transactional
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -16,15 +16,15 @@ class UserService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder
 ) {
-    fun findByEmail(email: String): UserDto {
+    fun findByEmail(email: String): UserResponse {
         val user = userRepository.findByEmail(email).orElseThrow { NotFoundUserException() }
-        return UserDto.of(user)
+        return UserResponse.of(user)
     }
 
-    fun findByEmailAndPassword(email: String, password: String): UserDto {
+    fun findByEmailAndPassword(email: String, password: String): UserResponse {
         val user = userRepository.findByEmail(email).orElseThrow { NotFoundUserException() }
         if (!passwordEncoder.matches(password, user.password)) throw NotMatchPasswordException()
-        return UserDto.of(user)
+        return UserResponse.of(user)
     }
 
     @Transactional

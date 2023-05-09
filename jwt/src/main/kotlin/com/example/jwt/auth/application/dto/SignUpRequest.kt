@@ -1,4 +1,4 @@
-package com.example.jwt.auth.dto
+package com.example.jwt.auth.application.dto
 
 import com.example.jwt.user.domain.Authority
 import com.example.jwt.user.domain.User

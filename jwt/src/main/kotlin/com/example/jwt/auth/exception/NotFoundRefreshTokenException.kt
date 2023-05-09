@@ -1,4 +1,4 @@
-package com.example.jwt.auth.application.exception
+package com.example.jwt.auth.exception
 
 import com.example.jwt._common.exception.ApiException
 import com.example.jwt._common.exception.ErrorCode
