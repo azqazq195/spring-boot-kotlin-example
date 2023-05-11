@@ -12,7 +12,7 @@ data class UserResponse(
     val modifiedAt: LocalDateTime
 ) {
     constructor(user: User) : this(
-        id = user.id!!,
+        id = user.id,
         email = user.email,
         role = user.role,
         createdAt = user.createdAt!!,
