@@ -65,8 +65,7 @@ class TokenProvider(
             refreshToken = createRefreshToken(user),
             expiredAt = Date(System.currentTimeMillis() + refreshTokenExpireTime)
         )
-        tokenRepository.save(token)
-        return TokenResponse.of(token)
+        return tokenRepository.save(token).let(::TokenResponse)
     }
 
     @Transactional
@@ -80,8 +79,7 @@ class TokenProvider(
         val token = tokenRepository.getByRefreshToken(refreshTokenRequest.refreshToken)
         check(token.accessToken != refreshTokenRequest.accessToken) { "토큰 정보가 일치하지 않습니다." }
         deleteByAccessToken(token.accessToken)
-        val user = userRepository.getByEmail(token.email)
-        return create(user)
+        return userRepository.getByEmail(token.email).let(::create)
     }
 
     fun getAuthentication(token: String): Authentication {

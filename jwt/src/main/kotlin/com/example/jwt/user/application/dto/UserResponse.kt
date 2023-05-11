@@ -10,13 +10,11 @@ data class UserResponse(
     val createdAt: LocalDateTime,
     val modifiedAt: LocalDateTime
 ) {
-    companion object {
-        fun of(user: User) = UserResponse(
-            id = user.id!!,
-            email = user.email,
-            authorities = user.authorities.map { it.name }.toList(),
-            createdAt = user.createdAt!!,
-            modifiedAt = user.modifiedAt!!
-        )
-    }
+    constructor(user: User) : this(
+        id = user.id!!,
+        email = user.email,
+        authorities = user.authorities.map { it.name }.toList(),
+        createdAt = user.createdAt!!,
+        modifiedAt = user.modifiedAt!!
+    )
 }

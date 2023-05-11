@@ -47,7 +47,8 @@ class AuthService(
 
     fun me(auth: Authentication): UserResponse {
         val email = auth.principal as String
-        val user = userRepository.getByEmail(email)
-        return UserResponse.of(user)
+        return userRepository
+            .getByEmail(email)
+            .let(::UserResponse)
     }
 }

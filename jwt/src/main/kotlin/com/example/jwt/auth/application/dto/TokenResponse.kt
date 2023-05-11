@@ -6,10 +6,8 @@ data class TokenResponse(
     val accessToken: String,
     val refreshToken: String
 ) {
-    companion object {
-        fun of(token: Token) = TokenResponse(
-            accessToken = token.accessToken,
-            refreshToken = token.refreshToken
-        )
-    }
+    constructor(token: Token) : this(
+        accessToken = token.accessToken,
+        refreshToken = token.refreshToken
+    )
 }
