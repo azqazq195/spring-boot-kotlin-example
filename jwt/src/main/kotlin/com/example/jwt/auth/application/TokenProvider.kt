@@ -6,10 +6,10 @@ import com.example.jwt.auth.application.dto.RefreshTokenRequest
 import com.example.jwt.auth.application.dto.TokenResponse
 import com.example.jwt.auth.domain.Token
 import com.example.jwt.auth.domain.repository.TokenRepository
-import com.example.jwt.auth.exception.NotFoundRefreshTokenException
-import com.example.jwt.auth.exception.NotMatchAccessToken
-import com.example.jwt.user.application.UserService
-import com.example.jwt.user.application.dto.UserResponse
+import com.example.jwt.auth.domain.repository.getByRefreshToken
+import com.example.jwt.user.domain.User
+import com.example.jwt.user.domain.repository.UserRepository
+import com.example.jwt.user.domain.repository.getByEmail
 import io.jsonwebtoken.*
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
@@ -39,7 +39,7 @@ class TokenProvider(
     @Value("\${jwt.refresh-token-expire-time}")
     private val refreshTokenExpireTime: Long,
     private val redisDao: RedisDao,
-    private val userService: UserService,
+    private val userRepository: UserRepository,
     private val tokenRepository: TokenRepository,
 ) {
 
@@ -58,7 +58,7 @@ class TokenProvider(
     }
 
     @Transactional
-    fun create(user: UserResponse): TokenResponse {
+    fun create(user: User): TokenResponse {
         val token = Token(
             email = user.email,
             accessToken = createAccessToken(user),
@@ -77,21 +77,16 @@ class TokenProvider(
 
     @Transactional
     fun refresh(refreshTokenRequest: RefreshTokenRequest): TokenResponse {
-        val token = tokenRepository.findByRefreshToken(refreshTokenRequest.refreshToken!!)
-            .orElseThrow { NotFoundRefreshTokenException() }
-
-        if (token.accessToken != refreshTokenRequest.accessToken)
-            throw NotMatchAccessToken()
-
+        val token = tokenRepository.getByRefreshToken(refreshTokenRequest.refreshToken)
+        check(token.accessToken != refreshTokenRequest.accessToken) { "토큰 정보가 일치하지 않습니다." }
         deleteByAccessToken(token.accessToken)
-        val user = userService.findByEmail(token.email)
+        val user = userRepository.getByEmail(token.email)
         return create(user)
     }
 
     fun getAuthentication(token: String): Authentication {
         val claims = getClaims(token)
         val email = claims.subject
-
         val authorities: Collection<GrantedAuthority> =
             Arrays.stream(claims[AUTHORITIES].toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }
                 .toTypedArray())
@@ -124,7 +119,7 @@ class TokenProvider(
         return false
     }
 
-    private fun createAccessToken(user: UserResponse): String {
+    private fun createAccessToken(user: User): String {
         val now = Date()
         val expiration = Date(now.time + accessTokenExpireTime)
 
@@ -137,7 +132,7 @@ class TokenProvider(
             .compact()
     }
 
-    private fun createRefreshToken(user: UserResponse): String {
+    private fun createRefreshToken(user: User): String {
         val now = Date()
         val expiration = Date(now.time + refreshTokenExpireTime)
 
