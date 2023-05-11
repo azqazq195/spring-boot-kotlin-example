@@ -5,7 +5,7 @@ import com.example.jwt.auth.application.dto.SignInRequest
 import com.example.jwt.auth.application.dto.SignUpRequest
 import com.example.jwt.auth.application.dto.TokenResponse
 import com.example.jwt.user.application.dto.UserResponse
-import com.example.jwt.user.domain.Authority
+import com.example.jwt.user.domain.Role
 import com.example.jwt.user.domain.repository.UserRepository
 import com.example.jwt.user.domain.repository.getByEmail
 import org.springframework.security.core.Authentication
@@ -21,7 +21,7 @@ class AuthService(
 ) {
     fun signIn(signInRequest: SignInRequest): TokenResponse {
         val user = userRepository.getByEmail(signInRequest.email)
-        check(passwordEncoder.matches(user.password, signInRequest.password)) { "비밀번호가 올바르지 않습니다." }
+        check(passwordEncoder.matches(signInRequest.password, user.password)) { "비밀번호가 올바르지 않습니다." }
         return tokenProvider.create(user)
     }
 
@@ -36,7 +36,7 @@ class AuthService(
         userRepository.save(
             signUpRequest.toUser(
                 passwordEncoder.encode(signUpRequest.password),
-                setOf(Authority("ROLE_USER"))
+                Role.USER
             )
         )
     }

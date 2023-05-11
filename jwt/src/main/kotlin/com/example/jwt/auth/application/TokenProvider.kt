@@ -44,7 +44,7 @@ class TokenProvider(
 ) {
 
     companion object {
-        const val AUTHORITIES = "roles"
+        const val ROLE = "role"
     }
 
     private val log = logger()
@@ -77,7 +77,7 @@ class TokenProvider(
     @Transactional
     fun refresh(refreshTokenRequest: RefreshTokenRequest): TokenResponse {
         val token = tokenRepository.getByRefreshToken(refreshTokenRequest.refreshToken)
-        check(token.accessToken != refreshTokenRequest.accessToken) { "토큰 정보가 일치하지 않습니다." }
+        check(token.accessToken == refreshTokenRequest.accessToken) { "토큰 정보가 일치하지 않습니다." }
         deleteByAccessToken(token.accessToken)
         return userRepository.getByEmail(token.email).let(::create)
     }
@@ -86,11 +86,10 @@ class TokenProvider(
         val claims = getClaims(token)
         val email = claims.subject
         val authorities: Collection<GrantedAuthority> =
-            Arrays.stream(claims[AUTHORITIES].toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }
+            Arrays.stream(claims[ROLE].toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }
                 .toTypedArray())
-                .map { role: String -> SimpleGrantedAuthority(role.replace("[", "").replace("]", "")) }
+                .map { role: String -> SimpleGrantedAuthority("ROLE_$role") }
                 .collect(Collectors.toList())
-
         return UsernamePasswordAuthenticationToken(email, token, authorities)
     }
 
@@ -123,7 +122,7 @@ class TokenProvider(
 
         return Jwts.builder()
             .setSubject(user.email)
-            .claim(AUTHORITIES, user.authorities)
+            .claim(ROLE, user.role)
             .setIssuedAt(now)
             .setExpiration(expiration)
             .signWith(accessKey, SignatureAlgorithm.HS256)
@@ -136,7 +135,7 @@ class TokenProvider(
 
         return Jwts.builder()
             .setSubject(user.email)
-            .claim(AUTHORITIES, user.authorities)
+            .claim(ROLE, user.role)
             .setIssuedAt(now)
             .setExpiration(expiration)
             .signWith(refreshKey, SignatureAlgorithm.HS256)

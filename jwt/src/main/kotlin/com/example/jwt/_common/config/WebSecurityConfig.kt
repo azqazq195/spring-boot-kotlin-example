@@ -37,6 +37,7 @@ class WebSecurityConfig(
 
             .and()
             .authorizeHttpRequests()
+            .requestMatchers("/health").permitAll()
             .requestMatchers("/auth/sign-in").permitAll()
             .requestMatchers("/auth/sign-up").permitAll()
             .requestMatchers("/auth/refresh").permitAll()

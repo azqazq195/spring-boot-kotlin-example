@@ -1,6 +1,6 @@
 package com.example.jwt.auth.application.dto
 
-import com.example.jwt.user.domain.Authority
+import com.example.jwt.user.domain.Role
 import com.example.jwt.user.domain.User
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
@@ -16,12 +16,12 @@ data class SignUpRequest(
     @field:Positive
     val age: Int
 ) {
-    fun toUser(encodedPassword: String, authorities: Set<Authority>) =
+    fun toUser(encodedPassword: String, role: Role) =
         User(
             email = email,
             password = encodedPassword,
             name = name,
             age = age,
-            authorities = authorities
+            role = role,
         )
 }
