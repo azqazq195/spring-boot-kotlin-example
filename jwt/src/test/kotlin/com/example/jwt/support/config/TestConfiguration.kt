@@ -1,4 +1,4 @@
-package com.example.jwt.support
+package com.example.jwt.support.config
 
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
