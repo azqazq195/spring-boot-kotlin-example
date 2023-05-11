@@ -1,12 +1,12 @@
 package com.example.jwt.auth.ui
 
-import com.example.jwt._common.dto.EmptyResult
-import com.example.jwt._common.dto.ResponseDto
-import com.example.jwt._common.dto.SingleResult
+import com.example.jwt._common.application.dto.EmptyResult
+import com.example.jwt._common.application.dto.ResponseDto
+import com.example.jwt._common.application.dto.SingleResult
 import com.example.jwt.auth.application.AuthService
-import com.example.jwt.auth.dto.RefreshTokenRequest
-import com.example.jwt.auth.dto.SignInRequest
-import com.example.jwt.auth.dto.SignUpRequest
+import com.example.jwt.auth.application.dto.RefreshTokenRequest
+import com.example.jwt.auth.application.dto.SignInRequest
+import com.example.jwt.auth.application.dto.SignUpRequest
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

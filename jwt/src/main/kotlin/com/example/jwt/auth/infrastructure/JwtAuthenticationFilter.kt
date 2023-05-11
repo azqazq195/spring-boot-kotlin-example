@@ -1,7 +1,6 @@
 package com.example.jwt.auth.infrastructure
 
 import com.example.jwt.auth.application.TokenProvider
-import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletRequest
 import jakarta.servlet.ServletResponse
@@ -12,7 +11,6 @@ import org.springframework.web.filter.GenericFilterBean
 
 class JwtAuthenticationFilter(
     private val tokenProvider: TokenProvider,
-    private val objectMapper: ObjectMapper
 ) : GenericFilterBean() {
     companion object {
         const val AUTH_HEADER = "Authorization"

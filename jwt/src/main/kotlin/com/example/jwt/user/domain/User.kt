@@ -1,10 +1,8 @@
 package com.example.jwt.user.domain
 
 import com.example.jwt._common.domain.DeletableEntity
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.JoinTable
-import jakarta.persistence.ManyToMany
+import jakarta.persistence.*
+import org.springframework.util.ObjectUtils
 
 @Entity(name = "tb_user")
 data class User(
@@ -20,7 +18,12 @@ data class User(
     @Column(nullable = true)
     val age: Int? = null,
 
-    @ManyToMany
-    @JoinTable(name = "tb_user_authority")
-    val authorities: Set<Authority>
-) : DeletableEntity()
+    @Enumerated(EnumType.STRING)
+    val role: Role,
+
+    ) : DeletableEntity() {
+    fun updatedName(name: String): User {
+        return if (ObjectUtils.isEmpty(name)) this
+        else this.copy(name = name)
+    }
+}
