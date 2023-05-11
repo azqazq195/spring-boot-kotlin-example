@@ -7,18 +7,18 @@ enum class ErrorCode(
     val message: String
 ) {
     /*
+     * COMMON
+     */
+    BAD_REQUEST(HttpStatus.BAD_REQUEST, "올바른 요청형식이 아닙니다."),
+
+    /*
      * AUTH
      */
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증정보가 유효하지 않습니다."),
     FORBIDDEN(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
-
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "인증정보가 유효하지 않습니다."),
     INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "인증정보가 유효하지 않습니다."),
-
-    // refresh token 으로 token 을 찾을 수 없음.
     NOT_FOUND_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "인증정보가 유효하지 않습니다."),
-
-    // access token 이 발급시점과 다름.
     NOT_MATCH_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "인증정보가 유효하지 않습니다."),
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "인증정보가 만료되었습니다."),
 

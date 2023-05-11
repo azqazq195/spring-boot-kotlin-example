@@ -5,6 +5,7 @@ import com.example.jwt._common.application.dto.ResponseDto
 import com.example.jwt._common.util.logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -24,15 +25,16 @@ class ExceptionHandler {
 
     @ExceptionHandler(ApiException::class)
     fun handleApiException(e: ApiException): ResponseEntity<EmptyResult> {
-        // TODO print stack trace only in development
-        e.printStackTrace()
         return ResponseDto.of(e.errorCode)
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ResponseEntity<EmptyResult> {
+        return ResponseDto.of(ErrorCode.BAD_REQUEST)
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<EmptyResult> {
-        // TODO print stack trace only in development
-        e.printStackTrace()
         val firstFieldError = e.bindingResult.allErrors[0] as FieldError
         val message = "[${firstFieldError.field}] ${firstFieldError.defaultMessage}"
         return ResponseDto.of(HttpStatus.BAD_REQUEST, message)
@@ -40,8 +42,6 @@ class ExceptionHandler {
 
     @ExceptionHandler(org.springframework.security.access.AccessDeniedException::class)
     fun handleAccessDeniedException(e: org.springframework.security.access.AccessDeniedException): ResponseEntity<EmptyResult> {
-        // TODO print stack trace only in development
-        e.printStackTrace()
         return ResponseDto.of(ErrorCode.FORBIDDEN)
     }
 

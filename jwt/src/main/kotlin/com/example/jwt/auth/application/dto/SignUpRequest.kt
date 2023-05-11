@@ -8,20 +8,20 @@ import jakarta.validation.constraints.Positive
 
 data class SignUpRequest(
     @field:Email
-    val email: String?,
+    val email: String,
     @field:NotBlank
-    val password: String?,
+    val password: String,
     @field:NotBlank
-    val name: String?,
+    val name: String,
     @field:Positive
-    val age: Int?
+    val age: Int
 ) {
     fun toUser(encodedPassword: String, authorities: Set<Authority>) =
         User(
-            email = email!!,
+            email = email,
             password = encodedPassword,
-            name = name!!,
-            age = age!!,
+            name = name,
+            age = age,
             authorities = authorities
         )
 }
