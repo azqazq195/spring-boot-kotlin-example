@@ -77,18 +77,26 @@ tasks {
     }
 
     asciidoctor {
+        dependsOn(test)
         inputs.dir(snippetsDir)
         configurations(asciidoctorExt.name)
-        dependsOn(test)
-        doLast {
-            copy {
-                from("build/docs/asciidoc")
-                into("src/main/resources/static/docs")
-            }
-        }
+        baseDirFollowsSourceFile()
+    }
+
+    register<Copy>("copyDocs") {
+        dependsOn(asciidoctor)
+        from("${asciidoctor.get().outputDir}")
+        into("src/main/resources/static/docs")
     }
 
     build {
         dependsOn(asciidoctor)
+    }
+
+    bootJar {
+        dependsOn(asciidoctor)
+        from("${asciidoctor.get().outputDir}/index.html") {
+            into("static/docs")
+        }
     }
 }
