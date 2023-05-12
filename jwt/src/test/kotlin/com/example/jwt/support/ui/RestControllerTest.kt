@@ -1,4 +1,4 @@
-package com.example.jwt._common.ui
+package com.example.jwt.support.ui
 
 import com.example.jwt.support.config.TestConfiguration
 import com.fasterxml.jackson.core.type.TypeReference
@@ -75,6 +75,53 @@ abstract class RestControllerTest {
         jsonPath("statusCode") { exists() }
         jsonPath("message") { exists() }
         jsonPath("timestamp") { exists() }
+    }
+
+    fun MockMvcResultHandlersDsl.document(
+        identifier: String,
+    ) {
+        handle(
+            MockMvcRestDocumentation.document(
+                identifier,
+            )
+        )
+    }
+
+    fun MockMvcResultHandlersDsl.document(
+        identifier: String,
+        responseFields: List<FieldDescriptor> = emptyList()
+    ) {
+        handle(
+            MockMvcRestDocumentation.document(
+                identifier,
+                responseFields(
+                    // fieldWithPath("data.accessToken").description("accessToken"),
+                    beneathPath("data").withSubsectionId("data"),
+                    responseFields
+                )
+            )
+        )
+    }
+
+    fun MockMvcResultHandlersDsl.document(
+        identifier: String,
+        requestFields: List<FieldDescriptor> = emptyList(),
+        responseFields: List<FieldDescriptor> = emptyList()
+    ) {
+        handle(
+            MockMvcRestDocumentation.document(
+                identifier,
+                requestFields(
+                    // fieldWithPath("data.accessToken").description("accessToken"),
+                    requestFields
+                ),
+                responseFields(
+                    // fieldWithPath("data.accessToken").description("accessToken"),
+                    beneathPath("data").withSubsectionId("data"),
+                    responseFields
+                )
+            )
+        )
     }
 
     fun MockMvcResultHandlersDsl.document(
