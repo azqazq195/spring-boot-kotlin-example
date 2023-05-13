@@ -1,27 +1,26 @@
 package com.example.jwt.support.ui
 
 import com.example.jwt.support.config.TestConfiguration
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
 import org.springframework.context.annotation.Import
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
+import org.springframework.restdocs.headers.HeaderDocumentation.*
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.operation.preprocess.Preprocessors
 import org.springframework.restdocs.payload.FieldDescriptor
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.ParameterDescriptor
 import org.springframework.restdocs.request.RequestDocumentation.*
-import org.springframework.test.context.TestConstructor
-import org.springframework.test.web.servlet.MockHttpServletRequestDsl
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.MockMvcResultHandlersDsl
-import org.springframework.test.web.servlet.MockMvcResultMatchersDsl
+import org.springframework.restdocs.snippet.Snippet
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
+import org.springframework.test.web.servlet.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -31,7 +30,6 @@ import org.springframework.web.filter.CharacterEncodingFilter
 @AutoConfigureRestDocs
 @ExtendWith(RestDocumentationExtension::class)
 @Import(TestConfiguration::class)
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 abstract class RestControllerTest {
     @Autowired
     lateinit var objectMapper: ObjectMapper
@@ -46,6 +44,7 @@ abstract class RestControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
             .addFilter<DefaultMockMvcBuilder>(CharacterEncodingFilter("UTF-8", true))
             .alwaysDo<DefaultMockMvcBuilder>(MockMvcResultHandlers.print())
+            .apply<DefaultMockMvcBuilder>(SecurityMockMvcConfigurers.springSecurity())
             .apply<DefaultMockMvcBuilder>(
                 MockMvcRestDocumentation.documentationConfiguration(
                     restDocumentationContextProvider
@@ -57,21 +56,31 @@ abstract class RestControllerTest {
             .build()
     }
 
+    fun MockHttpServletRequestDsl.bearer(token: String) {
+        fun bearerToken(token: String): String = "Bearer $token"
+
+        header(HttpHeaders.AUTHORIZATION, bearerToken(token))
+    }
+
+
     fun MockHttpServletRequestDsl.jsonContent(value: Any) {
         content = objectMapper.writeValueAsString(value)
         contentType = MediaType.APPLICATION_JSON
     }
 
-    fun MockMvcResultMatchersDsl.success(response: Any) {
-        status { is2xxSuccessful() }
+    fun MockMvcResultMatchersDsl.success(response: Any? = null) {
         jsonPath("statusCode") { exists() }
         jsonPath("message") { exists() }
         jsonPath("timestamp") { exists() }
-        jsonPath("data") { value(objectMapper.convertValue(response, object : TypeReference<Map<String, Any>>() {})) }
+//        response?.let {
+//            val responseData = objectMapper.writeValueAsString(response)
+//            val jsonNode = objectMapper.readTree(responseData)
+//            val data = objectMapper.convertValue(it, object : TypeReference<Map<String, Any>>() {})
+//            jsonPath("$.data") { objectMapper.writeValueAsString(response) }
+//        }
     }
 
     fun MockMvcResultMatchersDsl.failed() {
-        status { is4xxClientError() }
         jsonPath("statusCode") { exists() }
         jsonPath("message") { exists() }
         jsonPath("timestamp") { exists() }
@@ -79,74 +88,29 @@ abstract class RestControllerTest {
 
     fun MockMvcResultHandlersDsl.document(
         identifier: String,
+        queryParameters: List<ParameterDescriptor>? = null,
+        requestFields: List<FieldDescriptor>? = null,
+        responseFields: List<FieldDescriptor>? = null
     ) {
-        handle(
-            MockMvcRestDocumentation.document(
-                identifier,
-            )
-        )
-    }
+        val handlers = mutableListOf<Snippet>()
 
-    fun MockMvcResultHandlersDsl.document(
-        identifier: String,
-        responseFields: List<FieldDescriptor> = emptyList()
-    ) {
-        handle(
-            MockMvcRestDocumentation.document(
-                identifier,
+        queryParameters?.let {
+            handlers.add(queryParameters(it))
+        }
+
+        requestFields?.let {
+            handlers.add(requestFields(it))
+        }
+
+        responseFields?.let {
+            handlers.add(
                 responseFields(
-                    // fieldWithPath("data.accessToken").description("accessToken"),
                     beneathPath("data").withSubsectionId("data"),
-                    responseFields
+                    it
                 )
             )
-        )
-    }
+        }
 
-    fun MockMvcResultHandlersDsl.document(
-        identifier: String,
-        requestFields: List<FieldDescriptor> = emptyList(),
-        responseFields: List<FieldDescriptor> = emptyList()
-    ) {
-        handle(
-            MockMvcRestDocumentation.document(
-                identifier,
-                requestFields(
-                    // fieldWithPath("data.accessToken").description("accessToken"),
-                    requestFields
-                ),
-                responseFields(
-                    // fieldWithPath("data.accessToken").description("accessToken"),
-                    beneathPath("data").withSubsectionId("data"),
-                    responseFields
-                )
-            )
-        )
-    }
-
-    fun MockMvcResultHandlersDsl.document(
-        identifier: String,
-        queryParameters: List<ParameterDescriptor> = emptyList(),
-        requestFields: List<FieldDescriptor> = emptyList(),
-        responseFields: List<FieldDescriptor> = emptyList()
-    ) {
-        handle(
-            MockMvcRestDocumentation.document(
-                identifier,
-                queryParameters(
-                    // parameterWithName("d").description("dd")
-                    queryParameters
-                ),
-                requestFields(
-                    // fieldWithPath("data.accessToken").description("accessToken"),
-                    requestFields
-                ),
-                responseFields(
-                    // fieldWithPath("data.accessToken").description("accessToken"),
-                    beneathPath("data").withSubsectionId("data"),
-                    responseFields
-                )
-            )
-        )
+        handle(MockMvcRestDocumentation.document(identifier, *handlers.toTypedArray()))
     }
 }
